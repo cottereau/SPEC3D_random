@@ -1,0 +1,23 @@
+% modified by Maarten Arnst on 5/6/6
+
+% on ipgp aule/gana server:
+pgf90 -O3 -r8 -c Cubit2Spec.f90
+pgf90 Cubit2Spec.o -o c2s.x -L METIS/ METIS/libmetis.a 
+
+% on mssmat tourab server
+ifort -O3 -r8 -c Cubit2Spec.f90
+ifort Cubit2Spec.o -o c2s.x -L /opt/metis-4.0/ /opt/metis-4.0/libmetis.a
+
+% on em2c madness server
+ifort -O3 -r8 -c Cubit2Spec.f90
+ifort Cubit2Spec.o -o c2s.x -L /workdir/quangt/SPEC/MESH/metis-4.0/ /workdir/quangt/SPEC/MESH/metis-4.0/libmetis.a
+
+%on jade
+ifort -O3 -r8 -c Cubit2Spec.f90
+ifort Cubit2Spec.o -o c2s.x -L /home/mouronva/BENCH_genci/SPEC/MESH/metis-4.0/ -lmetis
+
+%on igloo
+module load intel-fce-11/11.1.073 
+ifort -O3 -r8 -c Cubit2Spec.f90
+ifort Cubit2Spec.o -o c2s.x -L $HOME/SPEC/MESH/metis-4.0/ -lmetis
+ 
