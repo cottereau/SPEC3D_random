@@ -123,13 +123,17 @@ if (Tdomain%super_object_type == "P") then ! Plane Wave
 
     if ( Tdomain%sPlaneW%pFace(nf)%dir == 0) then
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(0)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x0 = Tdomain%Coord_Nodes(0,i_aus); y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x0 = Tdomain%Coord_Nodes(0,i_aus); &
+      y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(1)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x1 = Tdomain%Coord_Nodes(0,i_aus); y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x1 = Tdomain%Coord_Nodes(0,i_aus); &
+      y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(2)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x2 = Tdomain%Coord_Nodes(0,i_aus); y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x2 = Tdomain%Coord_Nodes(0,i_aus); &
+      y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(3)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x3 = Tdomain%Coord_Nodes(0,i_aus); y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x3 = Tdomain%Coord_Nodes(0,i_aus); &
+      y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
 
       do j = 0,ngll2 - 1
         eta = Tdomain%sSubdomain(mat)%GLLcy(j)
@@ -161,20 +165,26 @@ if (Tdomain%super_object_type == "P") then ! Plane Wave
             Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) = - Tdomain%sPlaneW%pFace(nf)%normal(i,j,2)
           endif
 
-         if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face0",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(i,j,0)
+         if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) &
+         write(60,*) "Face0",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),&
+         Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(i,j,0)
 
         enddo
       enddo
 
     else if ( Tdomain%sPlaneW%pFace(nf)%dir == 1) then
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(0)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x0 = Tdomain%Coord_Nodes(0,i_aus); y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x0 = Tdomain%Coord_Nodes(0,i_aus); &
+      y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(1)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x1 = Tdomain%Coord_Nodes(0,i_aus); y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x1 = Tdomain%Coord_Nodes(0,i_aus); &
+      y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(2)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x5 = Tdomain%Coord_Nodes(0,i_aus); y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x5 = Tdomain%Coord_Nodes(0,i_aus); &
+      y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(3)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x4 = Tdomain%Coord_Nodes(0,i_aus); y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x4 = Tdomain%Coord_Nodes(0,i_aus); &
+      y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
 
       do j = 0,ngll2 - 1
         zeta = Tdomain%sSubdomain(mat)%GLLcz(j)
@@ -206,19 +216,25 @@ if (Tdomain%super_object_type == "P") then ! Plane Wave
             Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) = - Tdomain%sPlaneW%pFace(nf)%normal(i,j,2)
           endif
 
-         if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face1",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(i,0,j)
+         if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) &
+         write(60,*) "Face1",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),&
+         Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(i,0,j)
         enddo
       enddo
 
     else if ( Tdomain%sPlaneW%pFace(nf)%dir == 2) then
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(0)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x1 = Tdomain%Coord_Nodes(0,i_aus); y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x1 = Tdomain%Coord_Nodes(0,i_aus); &
+      y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(1)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x2 = Tdomain%Coord_Nodes(0,i_aus); y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x2 = Tdomain%Coord_Nodes(0,i_aus); &
+      y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(2)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x6 = Tdomain%Coord_Nodes(0,i_aus); y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x6 = Tdomain%Coord_Nodes(0,i_aus); &
+      y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(3)
-      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x5 = Tdomain%Coord_Nodes(0,i_aus); y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x5 = Tdomain%Coord_Nodes(0,i_aus); &
+      y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
 
       do j = 0,ngll2 - 1
         zeta = Tdomain%sSubdomain(mat)%GLLcz (j)
@@ -250,7 +266,9 @@ if (Tdomain%super_object_type == "P") then ! Plane Wave
             Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) = - Tdomain%sPlaneW%pFace(nf)%normal(i,j,2)
           endif
 
-         if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face2",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(5,i,j)
+         if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) &
+         write(60,*) "Face2",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),&
+         Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(5,i,j)
 
         enddo
       enddo
@@ -258,13 +276,17 @@ if (Tdomain%super_object_type == "P") then ! Plane Wave
     else if ( Tdomain%sPlaneW%pFace(nf)%dir == 3) then
 
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(0)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x3 = Tdomain%Coord_Nodes(0,i_aus); y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x3 = Tdomain%Coord_Nodes(0,i_aus); &
+       y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(1)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x2 = Tdomain%Coord_Nodes(0,i_aus); y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x2 = Tdomain%Coord_Nodes(0,i_aus); &
+       y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(2)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x6 = Tdomain%Coord_Nodes(0,i_aus); y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x6 = Tdomain%Coord_Nodes(0,i_aus); &
+       y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(3)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x7 = Tdomain%Coord_Nodes(0,i_aus); y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x7 = Tdomain%Coord_Nodes(0,i_aus); &
+       y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
 
        do j = 0,ngll2 - 1
          zeta = Tdomain%sSubdomain(mat)%GLLcz (j)
@@ -296,20 +318,26 @@ if (Tdomain%super_object_type == "P") then ! Plane Wave
              Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) = - Tdomain%sPlaneW%pFace(nf)%normal(i,j,2)
            endif
 
-          if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face3",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(i,5,j)
+          if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) &
+          write(60,*) "Face3",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),&
+          Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(i,5,j)
          enddo
        enddo
 
      else if ( Tdomain%sPlaneW%pFace(nf)%dir == 4) then
 
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(0)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x0 = Tdomain%Coord_Nodes(0,i_aus); y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x0 = Tdomain%Coord_Nodes(0,i_aus); &
+       y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(1)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x3 = Tdomain%Coord_Nodes(0,i_aus); y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x3 = Tdomain%Coord_Nodes(0,i_aus); &
+       y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(2)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x7 = Tdomain%Coord_Nodes(0,i_aus); y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x7 = Tdomain%Coord_Nodes(0,i_aus); &
+       y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(3)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x4 = Tdomain%Coord_Nodes(0,i_aus); y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x4 = Tdomain%Coord_Nodes(0,i_aus); &
+       y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
 
        do j = 0,ngll2 - 1
          zeta = Tdomain%sSubdomain(mat)%GLLcz (j)
@@ -340,7 +368,9 @@ if (Tdomain%super_object_type == "P") then ! Plane Wave
              Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) = - Tdomain%sPlaneW%pFace(nf)%normal(i,j,2)
            endif
 
-          if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face4",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(0,i,j)
+          if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) &
+          write(60,*) "Face4",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),&
+          Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(0,i,j)
 
          enddo
        enddo
@@ -348,13 +378,17 @@ if (Tdomain%super_object_type == "P") then ! Plane Wave
      else if ( Tdomain%sPlaneW%pFace(nf)%dir == 5) then
 
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(0)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x4 = Tdomain%Coord_Nodes(0,i_aus); y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x4 = Tdomain%Coord_Nodes(0,i_aus); &
+       y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(1)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x5 = Tdomain%Coord_Nodes(0,i_aus); y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x5 = Tdomain%Coord_Nodes(0,i_aus); &
+       y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(2)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x6 = Tdomain%Coord_Nodes(0,i_aus); y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x6 = Tdomain%Coord_Nodes(0,i_aus); &
+       y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
        nv = Tdomain%sPlaneW%pFace(nf)%Near_Vertices(3)
-       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x7 = Tdomain%Coord_Nodes(0,i_aus); y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
+       i_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP; x7 = Tdomain%Coord_Nodes(0,i_aus); &
+       y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
 
        do j = 0,ngll2 - 1
          eta = Tdomain%sSubdomain(mat)%GLLcy (j)
@@ -386,7 +420,9 @@ if (Tdomain%super_object_type == "P") then ! Plane Wave
              Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) = - Tdomain%sPlaneW%pFace(nf)%normal(i,j,2)
            endif
 
-          if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face5",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(i,j,5)
+          if ( Tdomain%sPlaneW%pFace(nf)%normal(i,j,2) < 0 ) &
+          write(60,*) "Face5",Tdomain%sPlaneW%pFace(nf)%normal(i,j,2),&
+          Tdomain%specel(Tdomain%sFace(Tdomain%sPlaneW%pFace(nf)%Face_UP)%Which_Elem)%Jacob(i,j,5)
 
          enddo
        enddo
@@ -441,13 +477,17 @@ if (Tdomain%logicD%neumann_local_present) then
 
     if ( Tdomain%sNeu%nFace(nf)%dir == 0) then
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(0)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x0 = Tdomain%Coord_Nodes(0,i_aus); y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x0 = Tdomain%Coord_Nodes(0,i_aus); &
+      y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(1)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x1 = Tdomain%Coord_Nodes(0,i_aus); y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x1 = Tdomain%Coord_Nodes(0,i_aus); &
+      y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(2)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x2 = Tdomain%Coord_Nodes(0,i_aus); y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x2 = Tdomain%Coord_Nodes(0,i_aus); &
+      y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(3)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x3 = Tdomain%Coord_Nodes(0,i_aus); y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x3 = Tdomain%Coord_Nodes(0,i_aus); &
+      y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
 
 
       do j = 0,ngll2 - 1
@@ -473,8 +513,10 @@ if (Tdomain%logicD%neumann_local_present) then
           Tdomain%sNeu%nFace(nf)%normal(i,j,1) = LocInvGradS(2,0)*LocInvGradS(0,1)-LocInvGradS(0,0)*LocInvGradS(2,1)
           Tdomain%sNeu%nFace(nf)%normal(i,j,2) = LocInvGradS(0,0)*LocInvGradS(1,1)-LocInvGradS(1,0)*LocInvGradS(0,1)
 
-         norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2+LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
-                (LocInvGradS(0,0)*LocInvGradS(0,1)+LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
+         norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2&
+         +LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
+                (LocInvGradS(0,0)*LocInvGradS(0,1)&
+                +LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
 
           if ( Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,j,0) > 0 ) then
             Tdomain%sNeu%nFace(nf)%normal(i,j,0) = - Tdomain%sNeu%nFace(nf)%normal(i,j,0)
@@ -482,7 +524,9 @@ if (Tdomain%logicD%neumann_local_present) then
             Tdomain%sNeu%nFace(nf)%normal(i,j,2) = - Tdomain%sNeu%nFace(nf)%normal(i,j,2)
           endif
 
-         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face0",Tdomain%sNeu%nFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,j,0)
+         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) &
+         write(60,*) "Face0",Tdomain%sNeu%nFace(nf)%normal(i,j,2),&
+         Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,j,0)
 
         enddo
       enddo
@@ -490,13 +534,17 @@ if (Tdomain%logicD%neumann_local_present) then
     else if ( Tdomain%sNeu%nFace(nf)%dir == 1) then
 
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(0)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x0 = Tdomain%Coord_Nodes(0,i_aus); y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x0 = Tdomain%Coord_Nodes(0,i_aus); &
+      y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(1)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x1 = Tdomain%Coord_Nodes(0,i_aus); y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x1 = Tdomain%Coord_Nodes(0,i_aus); &
+      y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(2)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x5 = Tdomain%Coord_Nodes(0,i_aus); y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x5 = Tdomain%Coord_Nodes(0,i_aus); &
+      y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(3)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x4 = Tdomain%Coord_Nodes(0,i_aus); y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x4 = Tdomain%Coord_Nodes(0,i_aus); &
+      y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
 
       do j = 0,ngll2 - 1
         zeta = Tdomain%sSubdomain(mat)%GLLcz(j)
@@ -521,8 +569,10 @@ if (Tdomain%logicD%neumann_local_present) then
           Tdomain%sNeu%nFace(nf)%normal(i,j,1) = LocInvGradS(2,0)*LocInvGradS(0,1)-LocInvGradS(0,0)*LocInvGradS(2,1)
           Tdomain%sNeu%nFace(nf)%normal(i,j,2) = LocInvGradS(0,0)*LocInvGradS(1,1)-LocInvGradS(1,0)*LocInvGradS(0,1)
 
-         norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2+LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
-                (LocInvGradS(0,0)*LocInvGradS(0,1)+LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
+         norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2&
+         +LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
+                (LocInvGradS(0,0)*LocInvGradS(0,1)&
+                +LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
 
           if ( Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,0,j) < 0 ) then
             Tdomain%sNeu%nFace(nf)%normal(i,j,0) = - Tdomain%sNeu%nFace(nf)%normal(i,j,0)
@@ -530,7 +580,9 @@ if (Tdomain%logicD%neumann_local_present) then
             Tdomain%sNeu%nFace(nf)%normal(i,j,2) = - Tdomain%sNeu%nFace(nf)%normal(i,j,2)
           endif
 
-          if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face1",Tdomain%sNeu%nFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,0,j)
+          if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) &
+          write(60,*) "Face1",Tdomain%sNeu%nFace(nf)%normal(i,j,2),&
+          Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,0,j)
 
         enddo
       enddo
@@ -538,13 +590,17 @@ if (Tdomain%logicD%neumann_local_present) then
     else if ( Tdomain%sNeu%nFace(nf)%dir == 2) then
 
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(0)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x1 = Tdomain%Coord_Nodes(0,i_aus); y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x1 = Tdomain%Coord_Nodes(0,i_aus); &
+      y1 = Tdomain%Coord_Nodes(1,i_aus); z1 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(1)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x2 = Tdomain%Coord_Nodes(0,i_aus); y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x2 = Tdomain%Coord_Nodes(0,i_aus); &
+      y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(2)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x6 = Tdomain%Coord_Nodes(0,i_aus); y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x6 = Tdomain%Coord_Nodes(0,i_aus); &
+      y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(3)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x5 = Tdomain%Coord_Nodes(0,i_aus); y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x5 = Tdomain%Coord_Nodes(0,i_aus); &
+      y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
 
       do j = 0,ngll2 - 1
         zeta = Tdomain%sSubdomain(mat)%GLLcz (j)
@@ -569,8 +625,10 @@ if (Tdomain%logicD%neumann_local_present) then
           Tdomain%sNeu%nFace(nf)%normal(i,j,1) = LocInvGradS(2,0)*LocInvGradS(0,1)-LocInvGradS(0,0)*LocInvGradS(2,1)
           Tdomain%sNeu%nFace(nf)%normal(i,j,2) = LocInvGradS(0,0)*LocInvGradS(1,1)-LocInvGradS(1,0)*LocInvGradS(0,1)
 
-         norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2+LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
-                (LocInvGradS(0,0)*LocInvGradS(0,1)+LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
+         norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2&
+         +LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
+                (LocInvGradS(0,0)*LocInvGradS(0,1)&
+                +LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
 
           ngll = Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%ngllx
 
@@ -580,7 +638,9 @@ if (Tdomain%logicD%neumann_local_present) then
             Tdomain%sNeu%nFace(nf)%normal(i,j,2) = - Tdomain%sNeu%nFace(nf)%normal(i,j,2)
           endif
 
-         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face2",nf,Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem,Tdomain%sNeu%nFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(5,i,j)
+         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) &
+         write(60,*) "Face2",nf,Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem,&
+         Tdomain%sNeu%nFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(5,i,j)
 
         enddo
       enddo
@@ -588,13 +648,17 @@ if (Tdomain%logicD%neumann_local_present) then
     else if ( Tdomain%sNeu%nFace(nf)%dir == 3) then
 
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(0)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x3 = Tdomain%Coord_Nodes(0,i_aus); y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x3 = Tdomain%Coord_Nodes(0,i_aus); &
+      y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(1)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x2 = Tdomain%Coord_Nodes(0,i_aus); y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x2 = Tdomain%Coord_Nodes(0,i_aus); &
+      y2 = Tdomain%Coord_Nodes(1,i_aus); z2 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(2)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x6 = Tdomain%Coord_Nodes(0,i_aus); y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x6 = Tdomain%Coord_Nodes(0,i_aus); &
+      y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(3)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x7 = Tdomain%Coord_Nodes(0,i_aus); y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x7 = Tdomain%Coord_Nodes(0,i_aus); &
+      y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
 
       do j = 0,ngll2 - 1
         zeta = Tdomain%sSubdomain(mat)%GLLcz (j)
@@ -619,8 +683,10 @@ if (Tdomain%logicD%neumann_local_present) then
          Tdomain%sNeu%nFace(nf)%normal(i,j,1) = LocInvGradS(2,0)*LocInvGradS(0,1)-LocInvGradS(0,0)*LocInvGradS(2,1)
          Tdomain%sNeu%nFace(nf)%normal(i,j,2) = LocInvGradS(0,0)*LocInvGradS(1,1)-LocInvGradS(1,0)*LocInvGradS(0,1)
 
-        norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2+LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
-               (LocInvGradS(0,0)*LocInvGradS(0,1)+LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
+        norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2&
+        +LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
+               (LocInvGradS(0,0)*LocInvGradS(0,1)&
+               +LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
 
           ngll = Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%nglly
 
@@ -630,7 +696,9 @@ if (Tdomain%logicD%neumann_local_present) then
             Tdomain%sNeu%nFace(nf)%normal(i,j,2) = - Tdomain%sNeu%nFace(nf)%normal(i,j,2)
           endif
 
-         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face3",Tdomain%sNeu%nFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,5,j)
+         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) &
+         write(60,*) "Face3",Tdomain%sNeu%nFace(nf)%normal(i,j,2),&
+         Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,5,j)
 
         enddo
       enddo
@@ -638,13 +706,17 @@ if (Tdomain%logicD%neumann_local_present) then
     else if ( Tdomain%sNeu%nFace(nf)%dir == 4) then
 
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(0)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x0 = Tdomain%Coord_Nodes(0,i_aus); y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x0 = Tdomain%Coord_Nodes(0,i_aus); &
+      y0 = Tdomain%Coord_Nodes(1,i_aus); z0 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(1)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x3 = Tdomain%Coord_Nodes(0,i_aus); y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x3 = Tdomain%Coord_Nodes(0,i_aus); &
+      y3 = Tdomain%Coord_Nodes(1,i_aus); z3 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(2)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x7 = Tdomain%Coord_Nodes(0,i_aus); y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x7 = Tdomain%Coord_Nodes(0,i_aus); &
+      y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(3)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x4 = Tdomain%Coord_Nodes(0,i_aus); y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x4 = Tdomain%Coord_Nodes(0,i_aus); &
+      y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
 
       do j = 0,ngll2 - 1
         zeta = Tdomain%sSubdomain(mat)%GLLcz (j)
@@ -669,8 +741,10 @@ if (Tdomain%logicD%neumann_local_present) then
           Tdomain%sNeu%nFace(nf)%normal(i,j,1) = LocInvGradS(2,0)*LocInvGradS(0,1)-LocInvGradS(0,0)*LocInvGradS(2,1)
           Tdomain%sNeu%nFace(nf)%normal(i,j,2) = LocInvGradS(0,0)*LocInvGradS(1,1)-LocInvGradS(1,0)*LocInvGradS(0,1)
 
-         norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2+LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
-                (LocInvGradS(0,0)*LocInvGradS(0,1)+LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
+         norm = (LocInvGradS(0,0)**2+LocInvGradS(1,0)**2&
+         +LocInvGradS(2,0)**2)*(LocInvGradS(0,1)**2+LocInvGradS(1,1)**2+LocInvGradS(2,1)**2)- &
+                (LocInvGradS(0,0)*LocInvGradS(0,1)&
+                +LocInvGradS(1,0)*LocInvGradS(1,1)+LocInvGradS(2,0)*LocInvGradS(2,1))**2
 
           if ( Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(0,i,j) > 0 ) then
             Tdomain%sNeu%nFace(nf)%normal(i,j,0) = - Tdomain%sNeu%nFace(nf)%normal(i,j,0)
@@ -678,7 +752,9 @@ if (Tdomain%logicD%neumann_local_present) then
             Tdomain%sNeu%nFace(nf)%normal(i,j,2) = - Tdomain%sNeu%nFace(nf)%normal(i,j,2)
           endif
 
-         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face4",Tdomain%sNeu%nFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(0,i,j)
+         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) &
+         write(60,*) "Face4",Tdomain%sNeu%nFace(nf)%normal(i,j,2),&
+         Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(0,i,j)
 
         enddo
       enddo
@@ -686,13 +762,17 @@ if (Tdomain%logicD%neumann_local_present) then
     else if ( Tdomain%sNeu%nFace(nf)%dir == 5) then
 
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(0)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x4 = Tdomain%Coord_Nodes(0,i_aus); y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x4 = Tdomain%Coord_Nodes(0,i_aus); &
+      y4 = Tdomain%Coord_Nodes(1,i_aus); z4 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(1)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x5 = Tdomain%Coord_Nodes(0,i_aus); y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x5 = Tdomain%Coord_Nodes(0,i_aus); &
+      y5 = Tdomain%Coord_Nodes(1,i_aus); z5 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(2)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x6 = Tdomain%Coord_Nodes(0,i_aus); y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x6 = Tdomain%Coord_Nodes(0,i_aus); &
+      y6 = Tdomain%Coord_Nodes(1,i_aus); z6 = Tdomain%Coord_Nodes(2,i_aus)
       nv = Tdomain%sNeu%nFace(nf)%Near_Vertices(3)
-      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x7 = Tdomain%Coord_Nodes(0,i_aus); y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
+      i_aus = Tdomain%sNeu%nVertex(nv)%Vertex; x7 = Tdomain%Coord_Nodes(0,i_aus); &
+      y7 = Tdomain%Coord_Nodes(1,i_aus); z7 = Tdomain%Coord_Nodes(2,i_aus)
 
       do j = 0,ngll2 - 1
         eta = Tdomain%sSubdomain(mat)%GLLcy (j)
@@ -717,8 +797,10 @@ if (Tdomain%logicD%neumann_local_present) then
           Tdomain%sNeu%nFace(nf)%normal(i,j,1) = LocInvGradS(2,0)*LocInvGradS(0,1)-LocInvGradS(0,0)*LocInvGradS(2,1)
           Tdomain%sNeu%nFace(nf)%normal(i,j,2) = LocInvGradS(0,0)*LocInvGradS(1,1)-LocInvGradS(1,0)*LocInvGradS(0,1)
 
-         norm = ( LocInvGradS(0,0)**2 + LocInvGradS(1,0)**2 + LocInvGradS(2,0)**2 )*( LocInvGradS(0,1)**2 + LocInvGradS(1,1)**2 + LocInvGradS(2,1)**2 ) -&
-                ( LocInvGradS(0,0)*LocInvGradS(0,1) + LocInvGradS(1,0)*LocInvGradS(1,1) + LocInvGradS(2,0)*LocInvGradS(2,1) )**2
+         norm = ( LocInvGradS(0,0)**2 + LocInvGradS(1,0)**2 &
+         + LocInvGradS(2,0)**2 )*( LocInvGradS(0,1)**2 + LocInvGradS(1,1)**2 + LocInvGradS(2,1)**2 ) -&
+                ( LocInvGradS(0,0)*LocInvGradS(0,1) &
+                + LocInvGradS(1,0)*LocInvGradS(1,1) + LocInvGradS(2,0)*LocInvGradS(2,1) )**2
 
           ngll = Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%ngllz
 
@@ -728,7 +810,9 @@ if (Tdomain%logicD%neumann_local_present) then
             Tdomain%sNeu%nFace(nf)%normal(i,j,2) = - Tdomain%sNeu%nFace(nf)%normal(i,j,2)
           endif
 
-         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) write(60,*) "Face5",Tdomain%sNeu%nFace(nf)%normal(i,j,2),Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,j,5)
+         if ( Tdomain%sNeu%nFace(nf)%normal(i,j,2) < 0 ) &
+         write(60,*) "Face5",Tdomain%sNeu%nFace(nf)%normal(i,j,2),&
+         Tdomain%specel(Tdomain%sFace(Tdomain%sNeu%nFace(nf)%Face)%Which_Elem)%Jacob(i,j,5)
 
          enddo
        enddo
