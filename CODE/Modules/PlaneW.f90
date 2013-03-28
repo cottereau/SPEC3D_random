@@ -121,8 +121,9 @@ do j = 1,ngll2-2
                               ( dt * (Face%MassMat_Up(i,j)+Face%MassMat_Down(i,ngll2-1-j)) )
       Face%Forces_Down(i,ngll2-1-j,0:2) = Face%Forces_Up(i,j,0:2) - Traction_i(i,j,0:2)
   else if ( Face%Orient == 3 ) then
-      Face%Forces_Up(i,j,0:2) = ( Vfree(i,j,0:2) -  vel_i(i,j,0:2) + dt*Face%MassMat_Down(ngll1-1-i,ngll2-1-j)*Traction_i(i,j,0:2) ) / &
-                              ( dt * (Face%MassMat_Up(i,j)+Face%MassMat_Down(ngll1-1-i,ngll2-1-j)) )
+      Face%Forces_Up(i,j,0:2) = ( Vfree(i,j,0:2) -  vel_i(i,j,0:2) &
+      + dt*Face%MassMat_Down(ngll1-1-i,ngll2-1-j)*Traction_i(i,j,0:2) ) &
+      / ( dt * (Face%MassMat_Up(i,j)+Face%MassMat_Down(ngll1-1-i,ngll2-1-j)) )
       Face%Forces_Down(ngll1-1-i,ngll2-1-j,0:2) = Face%Forces_Up(i,j,0:2) - Traction_i(i,j,0:2)
   else if ( Face%Orient == 4 ) then
       Face%Forces_Up(i,j,0:2) = ( Vfree(i,j,0:2) -  vel_i(i,j,0:2) + dt*Face%MassMat_Down(j,i)*Traction_i(i,j,0:2) ) / &
@@ -138,8 +139,9 @@ do j = 1,ngll2-2
                               ( dt * (Face%MassMat_Up(i,j)+Face%MassMat_Down(j,ngll2-1-i)) )
       Face%Forces_Down(j,ngll2-1-i,0:2) = Face%Forces_Up(i,j,0:2) - Traction_i(i,j,0:2)
   else if ( Face%Orient == 7 ) then
-      Face%Forces_Up(i,j,0:2) = ( Vfree(i,j,0:2) -  vel_i(i,j,0:2) + dt*Face%MassMat_Down(ngll1-1-j,ngll2-1-i)*Traction_i(i,j,0:2) ) / &
-                              ( dt * (Face%MassMat_Up(i,j)+Face%MassMat_Down(ngll1-1-j,ngll2-1-i)) )
+      Face%Forces_Up(i,j,0:2) = ( Vfree(i,j,0:2) -  vel_i(i,j,0:2) &
+      + dt*Face%MassMat_Down(ngll1-1-j,ngll2-1-i)*Traction_i(i,j,0:2) )&
+       / ( dt * (Face%MassMat_Up(i,j)+Face%MassMat_Down(ngll1-1-j,ngll2-1-i)) )
       Face%Forces_Down(ngll1-1-j,ngll2-1-i,0:2) = Face%Forces_Up(i,j,0:2) - Traction_i(i,j,0:2)
   endif
 !if (rg==0 .and. nf==12 .and. i==3 .and. j==3) write(40,*) ctime,Vfree(i,j,2)

@@ -165,7 +165,8 @@ if (logic) then
       case (3)
        do j = 1, ngll2-2
          do i = 1, ngll1-2
-	   Vfree(i,j,0:2) = Vfree(i,j,0:2) - ( F%V0(ngll1-1-i,ngll2-1-j,0:2) + dt*F%MassMat(ngll1-1-i,ngll2-1-j)*F%Forces(ngll1-1-i,ngll2-1-j,0:2) )
+	   Vfree(i,j,0:2) = Vfree(i,j,0:2) - ( F%V0(ngll1-1-i,ngll2-1-j,0:2) &
+	   + dt*F%MassMat(ngll1-1-i,ngll2-1-j)*F%Forces(ngll1-1-i,ngll2-1-j,0:2) )
          enddo
        enddo
       case (4)
@@ -190,14 +191,16 @@ if (logic) then
       case (7)
        do j = 1, ngll2-2
          do i = 1, ngll1-2
-	   Vfree(i,j,0:2) = Vfree(i,j,0:2) - ( F%V0(ngll1-1-j,ngll2-1-i,0:2) + dt*F%MassMat(ngll1-1-j,ngll2-1-i)*F%Forces(ngll1-1-j,ngll2-1-i,0:2) )
+	   Vfree(i,j,0:2) = Vfree(i,j,0:2) - ( F%V0(ngll1-1-j,ngll2-1-i,0:2) &
+	   + dt*F%MassMat(ngll1-1-j,ngll2-1-i)*F%Forces(ngll1-1-j,ngll2-1-i,0:2) )
          enddo
        enddo
      end select
 
 else
    do i = 0,2
-        Vfree(1:ngll1-2,1:ngll2-2,i) =  F%V0(1:ngll1-2,1:ngll2-2,i) + dt*F%MassMat(1:ngll1-2,1:ngll2-2)*F%Forces(1:ngll1-2,1:ngll2-2,i)
+        Vfree(1:ngll1-2,1:ngll2-2,i) =  F%V0(1:ngll1-2,1:ngll2-2,i) &
+        + dt*F%MassMat(1:ngll1-2,1:ngll2-2)*F%Forces(1:ngll1-2,1:ngll2-2,i)
    enddo
 !if (nf==13) write(20,*)  'Face1' ,Vfree(2,2,2)
 endif
