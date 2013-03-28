@@ -16,15 +16,18 @@ Europ. J. Comp. Mech., doi: 10.3166/ejcm.19.241-253
 
 OTHER VERSIONS OF THE PROGRAM
 ============
+Another version of the code, very similar in most core aspects can be found at
+http://www.ipgp.fr/~paulcup/RegSEM.html 
+
 The main characteristic of this version of the software is the implementation of random fields for the constitutive tensor.
 This version of the software is mainly developed at laboratoire MSSMat (Ecole Centrale Paris - CNRS).
 contact : Regis Cottereau (regis.cottereau@ecp.fr)
-
-Another version of the code, very similar in most core aspects can be found at
-http://www.ipgp.fr/~paulcup/RegSEM.html 
 
 COMPILATION
 ============
 For compilation of the software under MacOSX, one should install openmpi from http://www.open-mpi.org/ or from Fink
 
-For compilation on any platform, one should have installed and compiled the library dcdflib, available from http://www.netlib.org
+For compilation on any platform, one should have installed and compiled:
+1) library DCDFLIB, available from http://www.netlib.org
+2) libraries BLAS and LAPACK, available from http://www.netlib.org
+and added the corresponding paths in the Makefile adequate for the platform
