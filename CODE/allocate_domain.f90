@@ -139,16 +139,19 @@ subroutine allocate_domain (Tdomain,rg)
                 !!$           allocate (Tdomain%specel(n)%Displ (1:ngllx-2, 1:nglly-2, 1:ngllz-2, 0:2))
                 allocate (Tdomain%specel(n)%Displ (0:ngllx-1, 0:nglly-1, 0:ngllz-1, 0:2))
                 Tdomain%specel(n)%Displ = 0.
-                if (((Tdomain%logicD%save_snapshots==.true.) .and.  (Tdomain%Field_Order(2)==.true.)) .or. (Tdomain%logicD%save_energy==.true.)) then
+                if (((Tdomain%logicD%save_snapshots.eqv..true.) &
+                .and.  (Tdomain%Field_Order(2).eqv..true.)) .or. (Tdomain%logicD%save_energy.eqv..true.)) then
                     allocate(Tdomain%specel(n)%c(1:6,1:6,0:ngllx-1, 0:nglly-1, 0:ngllz-1))
                 !!$              allocate(Tdomain%specel(n)%stress_sigma(1:6,0:ngllx-1, 0:nglly-1, 0:ngllz-1))
                 endif
-                if ((Tdomain%logicD%save_snapshots==.true.) .and.  (Tdomain%Field_Order(4)==.true.)) then
+                if ((Tdomain%logicD%save_snapshots.eqv..true.) &
+                .and.  (Tdomain%Field_Order(4).eqv..true.)) then
                     allocate (Tdomain%specel(n)%MaxAbsVeloc(0:ngllx-1, 0:nglly-1, 0:ngllz-1))
-                    allocate (Tdomain%specel(n)%TravelTime (0:ngllx-1, 0:nglly-1, 0:ngllz-1, 1:size(Tdomain%Ratios)+1))
+!!!                    allocate (Tdomain%specel(n)&
+!!!!                    %TravelTime (0:ngllx-1, 0:nglly-1, 0:ngllz-1, 1:size(Tdomain%Ratios)+1))
                     allocate (Tdomain%specel(n)%TravelTimeFound (0:ngllx-1, 0:nglly-1, 0:ngllz-1, 1:size(Tdomain%Ratios)))
                     Tdomain%specel(n)%MaxAbsVeloc=0.
-                    Tdomain%specel(n)%TravelTime=0.
+!!!                    Tdomain%specel(n)%TravelTime=0.
                     Tdomain%specel(n)%TravelTimeFound=.false.
                 endif
 
@@ -193,7 +196,8 @@ subroutine allocate_domain (Tdomain,rg)
                 endselect
 
                 if (YesInSlice) then
-                    Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize-1)=Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize-1)+n_point_face
+                    Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize-1)=Tdomain&
+                    %I_elem_inSlices(ns,Tdomain%MaxiSliceSize-1)+n_point_face
                     Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize)=Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize)+1
                     Tdomain%I_elem_inSlices(ns,Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize))=n
                 endif
