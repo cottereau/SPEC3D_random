@@ -13,7 +13,7 @@ subroutine save_slices_enerPS(Tdomain,it,rg,icount)
   integer, intent (IN) :: it,rg,icount
 
   ! local variables
-  integer :: i,n,nv,nbvert,kcount,nv_aus
+  integer :: i,n,nv,nbvert,kcount,nv_aus,ne_above,ne_left
   integer, dimension(:), allocatable:: count
   character (len=100) :: fnamef
 
@@ -64,7 +64,8 @@ subroutine save_slices_enerPS(Tdomain,it,rg,icount)
 	print *, 'PScheck0', Tdomain%nbSlices
      do ns=1,Tdomain%nbSlices
        print *,'PScheck1', Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize),rg 
-        call MPI_ALLGATHER(Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize),1,MPI_INTEGER,NbElem_inSlices(ns,:),1,MPI_INTEGER, MPI_COMM_WORLD,code)
+        call MPI_ALLGATHER(Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize),1,&
+        MPI_INTEGER,NbElem_inSlices(ns,:),1,MPI_INTEGER, MPI_COMM_WORLD,code)
         if (ns .gt. 1 ) then 
            ne_above=sum(NbElem_inSlices(1:ns-1,:))
         else
@@ -295,7 +296,8 @@ Ediv_curl(:,:,:,1)=(dVy_dz-dVz_dy)**2+(dVz_dx-dVx_dz)**2+(dVx_dy-dVy_dx)**2
 
      do ns=1,Tdomain%nbSlices
 
-        call MPI_ALLGATHER(Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize),1,MPI_INTEGER,NbElem_inSlices(ns,:),1,MPI_INTEGER, MPI_COMM_WORLD,code)
+        call MPI_ALLGATHER(Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize),1,&
+        MPI_INTEGER,NbElem_inSlices(ns,:),1,MPI_INTEGER, MPI_COMM_WORLD,code)
         if (ns .gt. 1 ) then 
            ne_above=sum(NbElem_inSlices(1:ns-1,:))
         else
