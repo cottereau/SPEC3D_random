@@ -133,7 +133,7 @@ subroutine read_input (Tdomain, rg)
      read (11,*)
   endif
 
-  logic_scheme = Tdomain%TimeD%acceleration_scheme .xor. Tdomain%TimeD%velocity_scheme
+  logic_scheme = Tdomain%TimeD%acceleration_scheme .neqv. Tdomain%TimeD%velocity_scheme
   if (.not. logic_scheme) then
      write (*,*) "No compatible acceleration and velocity schemes" 
      stop
@@ -169,7 +169,8 @@ subroutine read_input (Tdomain, rg)
         open (111,file="sources.posi", form="formatted", status="unknown")
         read (111,*) ! Legends
         do i = 0, Tdomain%n_source - 1
-           read (111,*) Tdomain%Ssource(i)%Xsource, Tdomain%Ssource(i)%Ysource, Tdomain%Ssource(i)%Zsource,Tdomain%Ssource(i)%i_type_source,Tdomain%Ssource(i)%i_dir   
+           read (111,*) Tdomain%Ssource(i)%Xsource, Tdomain%Ssource(i)%Ysource, &
+           Tdomain%Ssource(i)%Zsource,Tdomain%Ssource(i)%i_type_source,Tdomain%Ssource(i)%i_dir
            Tdomain%Ssource(i)%i_time_function=Tdomain%Ssource(0)%i_time_function
            Tdomain%Ssource(i)%tau_b= Tdomain%Ssource(0)%tau_b
            Tdomain%Ssource(i)%cutoff_freq= Tdomain%Ssource(0)%cutoff_freq
@@ -389,7 +390,8 @@ if (Tdomain%logicD%super_object) then
      allocate (Tdomain%sComm(0:Tdomain%n_proc-1))
      do i = 0,Tdomain%n_proc-1
         read(12,*) Tdomain%sComm(i)%nb_faces, Tdomain%sComm(i)%nb_edges, Tdomain%sComm(i)%nb_vertices, &
-             Tdomain%sComm(i)%nb_edges_so, Tdomain%sComm(i)%nb_vertices_so, Tdomain%sComm(i)%nb_edges_neu, Tdomain%sComm(i)%nb_vertices_neu     
+             Tdomain%sComm(i)%nb_edges_so, Tdomain%sComm(i)%nb_vertices_so, &
+             Tdomain%sComm(i)%nb_edges_neu, Tdomain%sComm(i)%nb_vertices_neu
         if (Tdomain%sComm(i)%nb_faces>0) then
            allocate (Tdomain%sComm(i)%faces(0:Tdomain%sComm(i)%nb_faces-1))
            allocate (Tdomain%sComm(i)%orient_faces(0:Tdomain%sComm(i)%nb_faces-1))
@@ -659,7 +661,8 @@ if (Tdomain%logicD%super_object) then
   write(22,*) Tdomain%n_glob_nodes,Tdomain%n_elem
   do i = 0,Tdomain%n_glob_nodes-1
 !!$     write (22,"(I4.4,3f)") i+1,(Tdomain%Coord_nodes(j,i), j=0,Tdomain%n_dime-1)
-write (22,"(I4.4,a,f,a,f,a,f)") i+1,' ',Tdomain%Coord_nodes(0,i),' ',Tdomain%Coord_nodes(1,i),' ',Tdomain%Coord_nodes(2,i)
+write (22,"(I4.4,a,f12.7,a,f12.7,a,f12.7)") i+1,' ',Tdomain%Coord_nodes(0,i),' ',&
+Tdomain%Coord_nodes(1,i),' ',Tdomain%Coord_nodes(2,i)
   enddo
   write(22,*)
   do i = 0, Tdomain%n_elem - 1
