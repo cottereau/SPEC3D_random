@@ -2,6 +2,23 @@ SPEC3D_random
 
 PRESENTATION
 ============
-3D parallel spectral element code for elastic wave propagation in random anisotropic medium 
+3D parallel spectral element code for elastic wave propagation in random anisotropic medium
 
-SK
+REFERENCES
+============
+Cupillard, P., E. Delavaud, G. Burgos, G. Festa, J.-P. Vilotte, Y. Capdeville and J.-P. Montagner (2012). 
+RegSEM : a versatile code based on the Spectral Element Method to compute seismic wave propagation at the regional scale. 
+Geophys. J. Int., doi: 10.1111/j.1365-246X.2011.05311.x
+
+Ta Q.-A., D. Clouteau and R. Cottereau (2010).
+Modeling of random anisotropic elastic media and impact on wave propagation.
+Europ. J. Comp. Mech., doi: 10.3166/ejcm.19.241-253
+
+OTHER VERSIONS OF THE PROGRAM
+============
+The main characteristic of this version of the software is the implementation of random fields for the constitutive tensor.
+This version of the software is mainly developed at laboratoire MSSMat (Ecole Centrale Paris - CNRS).
+contact : Regis Cottereau (regis.cottereau@ecp.fr)
+
+Another version of the code, very similar in most core aspects can be found at
+http://www.ipgp.fr/~paulcup/RegSEM.html 
