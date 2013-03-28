@@ -57,7 +57,7 @@ subroutine define_mechanical_fields_aniso(SubD, &
      call MPI_TYPE_SIZE(MPI_DOUBLE_PRECISION,NbOctReal,s_code)
      SZG = ngllx*nglly*ngllz
      SZG23=23*SZG
-     C2read_write(:,:,:,:)=1e100
+     C2read_write(:,:,:,:)=2e38
   
   else
 
@@ -115,7 +115,7 @@ subroutine define_mechanical_fields_aniso(SubD, &
            enddo
         enddo
 !!$print *, minval(abs(s_C))
-        if (maxval(s_C) .gt. 1e99) then !The material had not been attributed for this element
+        if (maxval(s_C) .gt. 2e38) then !The material had not been attributed for this element
            Elem_Reload_mat=.false.
 !!$      print *, 'Elem_Reload_false',n, maxval(s_C)
            goto 2000
@@ -175,7 +175,8 @@ subroutine define_mechanical_fields_aniso(SubD, &
 
                                    u_fluct(i0,j0,i1,j1,k1)=sqrt(1./7.)*SubD%delta*sqrt(2*Diag)
                                 case("L")
-                                   u_fluct(i0,j0,i1,j1,k1)=sqrt(1./7.)*delta_diag**(-0.5)*sqrt(2*delta_diag*exp(germ*sqrt(log(delta_diag**(-1)+1))+&
+                                   u_fluct(i0,j0,i1,j1,k1)=sqrt(1./7.)*delta_diag**(-0.5)&
+                                   *sqrt(2*delta_diag*exp(germ*sqrt(log(delta_diag**(-1)+1))+&
                                         log(1/sqrt(delta_diag**(-1)+1))))                    
                                 end select
                              enddo
@@ -266,7 +267,8 @@ subroutine define_mechanical_fields_aniso(SubD, &
                                       call gaminv(delta_diag,Diag,X0,P,Q,s_code) 
                                       u_fluct(i0,j0,i1,j1,k1)=sqrt(1./7.)*SubD%delta_kernel*sqrt(2*Diag)
                                    case("L")
-                                      u_fluct(i0,j0,i1,j1,k1)=sqrt(1./7.)*delta_diag**(-0.5)*sqrt(2*delta_diag*exp(germ*sqrt(log(delta_diag**(-1)+1))+&
+                                      u_fluct(i0,j0,i1,j1,k1)=sqrt(1./7.)*delta_diag**(-0.5)&
+                                      *sqrt(2*delta_diag*exp(germ*sqrt(log(delta_diag**(-1)+1))+&
                                            log(1/sqrt(delta_diag**(-1)+1))))                    
                                    end select
                                 enddo
@@ -303,10 +305,12 @@ subroutine define_mechanical_fields_aniso(SubD, &
                              !print *,'check63'
                           case("L")
                              germ=Field21(22,i1,j1,k1)
-                             Kappa_prepost(i1,j1,k1)=Kappa_prepost(i1,j1,k1)*delta_diag*exp(germ*sqrt(log(delta_diag**(-1)+1))+log(1/sqrt(delta_diag**(-1)+1))) 
+                             Kappa_prepost(i1,j1,k1)=Kappa_prepost(i1,j1,k1)*delta_diag&
+                             *exp(germ*sqrt(log(delta_diag**(-1)+1))+log(1/sqrt(delta_diag**(-1)+1)))
 
                              germ=Field21(23,i1,j1,k1)
-                             Mu_prepost(i1,j1,k1)=Mu_prepost(i1,j1,k1)*delta_diag*exp(germ*sqrt(log(delta_diag**(-1)+1))+log(1/sqrt(delta_diag**(-1)+1)))
+                             Mu_prepost(i1,j1,k1)=Mu_prepost(i1,j1,k1)*delta_diag&
+                             *exp(germ*sqrt(log(delta_diag**(-1)+1))+log(1/sqrt(delta_diag**(-1)+1)))
                           end select
                        endif
                        !print *,'check64'
@@ -356,12 +360,12 @@ subroutine define_mechanical_fields_aniso(SubD, &
 
               Outer=PML_logicals(0) .and. &
                    (&
-                   ((PML_logicals(1)==.true. .and. PML_logicals(4)==.true.) .and. (i1<SubD%PML_GLL_out)) .or. &
-                   ((PML_logicals(2)==.true. .and. PML_logicals(5)==.true.) .and. (j1<SubD%PML_GLL_out)) .or. &
-                   ((PML_logicals(3)==.true. .and. PML_logicals(6)==.true.) .and. (k1<SubD%PML_GLL_out)) .or. & 
-                   ((PML_logicals(1)==.true. .and. PML_logicals(4)==.false.) .and. (i1>(ngllx-1-SubD%PML_GLL_out))) .or. &
-                   ((PML_logicals(2)==.true. .and. PML_logicals(5)==.false.) .and. (j1>(nglly-1-SubD%PML_GLL_out))) .or. &
-                   ((PML_logicals(3)==.true. .and. PML_logicals(6)==.false.) .and. (k1>(ngllz-1-SubD%PML_GLL_out))) &
+                   ((PML_logicals(1).eqv..true. .and. PML_logicals(4).eqv..true.) .and. (i1<SubD%PML_GLL_out)) .or. &
+                   ((PML_logicals(2).eqv..true. .and. PML_logicals(5).eqv..true.) .and. (j1<SubD%PML_GLL_out)) .or. &
+                   ((PML_logicals(3).eqv..true. .and. PML_logicals(6).eqv..true.) .and. (k1<SubD%PML_GLL_out)) .or. &
+                   ((PML_logicals(1).eqv..true. .and. PML_logicals(4).eqv..false.) .and. (i1>(ngllx-1-SubD%PML_GLL_out))) .or. &
+                   ((PML_logicals(2).eqv..true. .and. PML_logicals(5).eqv..false.) .and. (j1>(nglly-1-SubD%PML_GLL_out))) .or. &
+                   ((PML_logicals(3).eqv..true. .and. PML_logicals(6).eqv..false.) .and. (k1>(ngllz-1-SubD%PML_GLL_out))) &
                    !!$                ((PML_logicals(1)==.true. .and. PML_logicals(4)==.true.) .and. (float(i1)<(float((ngllx-1))/2))) .or. &
 !!$                ((PML_logicals(2)==.true. .and. PML_logicals(5)==.true.) .and. (float(j1)<(float((nglly-1))/2))) .or. &
 !!$                ((PML_logicals(3)==.true. .and. PML_logicals(6)==.true.) .and. (float(k1)<(float((ngllz-1))/2))) .or. & 
@@ -369,8 +373,10 @@ subroutine define_mechanical_fields_aniso(SubD, &
 !!$                ((PML_logicals(2)==.true. .and. PML_logicals(5)==.false.) .and. (float(j1)>(float((nglly-1))/2))) .or. &
 !!$                ((PML_logicals(3)==.true. .and. PML_logicals(6)==.false.) .and. (float(k1)>(float((ngllz-1))/2))) &
               &)
-              kappa_eqv(i1,j1,k1)=(s_C(1,1,i1,j1,k1)+s_C(2,2,i1,j1,k1)+s_C(3,3,i1,j1,k1)+2.*(s_C(1,2,i1,j1,k1)+s_C(1,3,i1,j1,k1)+s_C(2,3,i1,j1,k1)))/9.
-              mu_eqv=(s_C(1,1,i1,j1,k1)+s_C(2,2,i1,j1,k1)+s_C(3,3,i1,j1,k1)+3*(s_C(4,4,i1,j1,k1)+s_C(5,5,i1,j1,k1)+s_C(6,6,i1,j1,k1))-(s_C(1,2,i1,j1,k1)+s_C(1,3,i1,j1,k1)+s_C(2,3,i1,j1,k1)))/15.
+              kappa_eqv(i1,j1,k1)=(s_C(1,1,i1,j1,k1)+s_C(2,2,i1,j1,k1)+s_C(3,3,i1,j1,k1)&
+              +2.*(s_C(1,2,i1,j1,k1)+s_C(1,3,i1,j1,k1)+s_C(2,3,i1,j1,k1)))/9.
+              mu_eqv=(s_C(1,1,i1,j1,k1)+s_C(2,2,i1,j1,k1)+s_C(3,3,i1,j1,k1)+3*(s_C(4,4,i1,j1,k1)&
+              +s_C(5,5,i1,j1,k1)+s_C(6,6,i1,j1,k1))-(s_C(1,2,i1,j1,k1)+s_C(1,3,i1,j1,k1)+s_C(2,3,i1,j1,k1)))/15.
               !Compute norm(C) 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
               do i0=1,6
@@ -395,7 +401,8 @@ subroutine define_mechanical_fields_aniso(SubD, &
                           indice_A(i1,j1,k1)=indice_A(i1,j1,k1)+4*(abs(s_C(i0,j0,i1,j1,k1)-mu_eqv(i1,j1,k1)))**2 !4
                           if (Outer) s_C(i0,j0,i1,j1,k1)=mu_eqv(i1,j1,k1)
                        else
-                          indice_A(i1,j1,k1)=indice_A(i1,j1,k1)+(abs(s_C(i0,j0,i1,j1,k1)-4*mu_eqv(i1,j1,k1)/3-kappa_eqv(i1,j1,k1)))**2
+                          indice_A(i1,j1,k1)=indice_A(i1,j1,k1)+(abs(s_C(i0,j0,i1,j1,k1)&
+                          -4*mu_eqv(i1,j1,k1)/3-kappa_eqv(i1,j1,k1)))**2
                           if (Outer)s_C(i0,j0,i1,j1,k1)=4*mu_eqv(i1,j1,k1)/3+kappa_eqv(i1,j1,k1)
                        endif!i0>3
                     else
@@ -407,7 +414,8 @@ subroutine define_mechanical_fields_aniso(SubD, &
                              indice_A(i1,j1,k1)=indice_A(i1,j1,k1)+4*(abs(s_C(i0,j0,i1,j1,k1)))**2 !4
                              if (Outer) s_C(i0,j0,i1,j1,k1)=0.                     
                           else
-                             indice_A(i1,j1,k1)=indice_A(i1,j1,k1)+2*(abs(s_C(i0,j0,i1,j1,k1)-kappa_eqv(i1,j1,k1)+2*mu_eqv(i1,j1,k1)/3.))**2 !2
+                             indice_A(i1,j1,k1)=indice_A(i1,j1,k1)+2*(abs(s_C(i0,j0,i1,j1,k1)&
+                             -kappa_eqv(i1,j1,k1)+2*mu_eqv(i1,j1,k1)/3.))**2 !2
                              if (Outer) s_C(i0,j0,i1,j1,k1)=kappa_eqv(i1,j1,k1)-2*mu_eqv(i1,j1,k1)/3.
                           endif
                        endif!i0>3
