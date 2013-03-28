@@ -2,13 +2,41 @@
 
 FC = mpif90     # Fortran 90 compiler with wrapper by openmpi
 
-OPT = -O3 -r8
+export HOSTNAME
+F90 = mpif90
+# Fortran 90 compiler for MSSMat
+#================================
+ifeq ($(HOSTNAME),wayra)
+F90 = ifort
+endif
+
+ifeq ($(HOSTNAME),shui)
+F90 = ifort
+endif
+
+ifeq ($(HOSTNAME),pyr)
+F90 = ifort
+endif
+
+ifeq ($(HOSTNAME),tourab)
+F90 = ifort
+endif
+#===============================
+
+# Fortran 90 compiler for EM2C
+ifeq ($(HOSTNAME),madness)
+F90 = /usr/voltaire/mpi.pathcc.rsh/bin/mpif90 # Fortran 90 compiler for madness
+endif
+
+OPT = -O3
 
 #OPT = -g 
 
-MMOD = -module
+MMOD = 
+#MMOD = -module
 
 MODULEDIR = ./Modules/
+MODULE_OPTION = ./Modules/
 
 PATH_INCLU = /usr/include/
 
@@ -23,7 +51,7 @@ all : spec.x
 spec.x : make_module $(OBJ)
 	$(FC) $(F90FLAGS) $(OPT) -o $@ $(OBJ) $(OBJ_MOD)   "/opt/san/intel/mkl/10.2.6.038//lib/em64t"/libmkl_intel_lp64.a -Wl,--start-group "/opt/san/intel/mkl/10.2.6.038//lib/em64t"/libmkl_intel_thread.a "/opt/san/intel/mkl/10.2.6.038//lib/em64t"/libmkl_core.a -Wl,--end-group -L"/opt/san/intel/mkl/10.2.6.038//lib/em64t" -liomp5 -lpthread  -L $(HOME)/SPEC/RAND_LIB  -lrandom
 make_module :
-	$(MAKE) all -C $(MODULEDIR) "OPT=$(OPT)" "F90MOD=$(MMOD)"
+	$(MAKE) all -C $(MODULEDIR) "OPT=$(OPT)" "F90MOD=$(MMOD)" "FC=$(FC)"
 
 %.o : %.f90 
 	$(FC) $(F90FLAGS) $(OPT) -c $< 
