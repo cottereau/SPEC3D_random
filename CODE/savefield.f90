@@ -210,8 +210,10 @@ subroutine savefield (Tdomain,it,rg,icount)
            do n_x=0,ngllx-1
               do n_y=0,nglly-1
                  do n_z=0,ngllz-1
-                    call DGEMV('N', 6, 6, 1.d0,Tdomain%specel(n)%c(:,:,n_x,n_y,n_z), 6,strain(n_x,n_y,n_z,:) , 1, 0.d0, stress_sigma(n_x,n_y,n_z,:), 1)
-                    !DGEMV(TRANSA, M, N, ALPHA, A,                                LDA, X,                      INCX, BETA,      Y,                    INCY)
+                    call DGEMV('N', 6, 6, 1.d0,Tdomain%specel(n)%c(:,:,n_x,n_y,n_z), &
+                    6,strain(n_x,n_y,n_z,:) , 1, 0.d0, stress_sigma(n_x,n_y,n_z,:), 1)
+                   !DGEMV(TRANSA, M, N, ALPHA,                   A,
+                   !!LDA,   X,             INCX, BETA,         Y,                  INCY)
                  enddo
               enddo
            enddo
@@ -270,7 +272,8 @@ subroutine savefield (Tdomain,it,rg,icount)
                        AbsVeloc=sqrt(Tdomain%specel(n)%Veloc(n_x,n_y,n_z,0)**2+&
                             Tdomain%specel(n)%Veloc(n_x,n_y,n_z,1)**2+&
                             Tdomain%specel(n)%Veloc(n_x,n_y,n_z,2)**2)
-                       if (AbsVeloc .gt. Tdomain%specel(n)%MaxAbsVeloc (n_x,n_y,n_z)) Tdomain%specel(n)%MaxAbsVeloc (n_x,n_y,n_z)=AbsVeloc
+                       if (AbsVeloc .gt. Tdomain%specel(n)%MaxAbsVeloc (n_x,n_y,n_z)) &
+                       Tdomain%specel(n)%MaxAbsVeloc (n_x,n_y,n_z)=AbsVeloc
                     enddo
                  enddo
               enddo
@@ -284,14 +287,14 @@ subroutine savefield (Tdomain,it,rg,icount)
                        do l=1,size(Tdomain%Ratios)
                           if (.not. Tdomain%specel(n)%TravelTimeFound(n_x,n_y,n_z,l)) then
                              if (.not. (AbsVeloc .lt. (Tdomain%Ratios(l)*Tdomain%specel(n)%MaxAbsVeloc (n_x, n_y, n_z)))) then
-                                Tdomain%specel(n)%TravelTime(n_x,n_y,n_z,l)=it*Tdomain%sSubdomain(Tdomain%specel(n)%mat_index)%Dt
+!!!                                Tdomain%specel(n)%TravelTime(n_x,n_y,n_z,l)=it*Tdomain%sSubdomain(Tdomain%specel(n)%mat_index)%Dt
                                 Tdomain%specel(n)%TravelTimeFound(n_x,n_y,n_z,l)=.true.
-                                print *, 'TravelTime(nx ny nz rat)max it dt ',Tdomain%specel(n)%TravelTime(n_x,n_y,n_z,l),Tdomain%specel(n)%MaxAbsVeloc (n_x, n_y, n_z),it,Tdomain%sSubdomain(Tdomain%specel(n)%mat_index)%Dt
+!!!                                print *, 'TravelTime(nx ny nz rat)max it dt ',Tdomain%specel(n)%TravelTime(n_x,n_y,n_z,l),&
+!!!                                Tdomain%specel(n)%MaxAbsVeloc (n_x, n_y, n_z),it,Tdomain%sSubdomain(Tdomain%specel(n)%mat_index)%Dt
                              endif
                           endif
                        enddo
-                       if (it==0) &
-                            Tdomain%specel(n)%TravelTime(n_x,n_y,n_z,size(Tdomain%Ratios)+1)=Tdomain%specel(n)%MaxAbsVeloc (n_x,n_y,n_z)
+!!!                       if (it==0) Tdomain%specel(n)%TravelTime(n_x,n_y,n_z,size(Tdomain%Ratios)+1)=Tdomain%specel(n)%MaxAbsVeloc (n_x,n_y,n_z)
                     enddo
                  enddo
               enddo
@@ -350,7 +353,8 @@ subroutine savefield (Tdomain,it,rg,icount)
               PosFileR = PosFileR + n*NbOctReal*SZG6 ! Traveltime of previous elts
               PosFileI = PosFileI + n*NbOctInt*SZG !GlobId of previous elts
               call MPI_FILE_WRITE_AT(desc,PosFileI,GlobId,SZG,MPI_INTEGER,statut,code)
-              call MPI_FILE_WRITE_AT(desc,PosFileR,Tdomain%specel(n)%Traveltime(:,:,:,:),SZG6,MPI_DOUBLE_PRECISION,statut,code)
+!!!              call MPI_FILE_WRITE_AT(desc,PosFileR,Tdomain%specel(n)%Traveltime(:,:,:,:),&
+!!!              SZG6,MPI_DOUBLE_PRECISION,statut,code)
            endif
         enddo
         if ((rg==nbprocs-1)) then
@@ -417,7 +421,8 @@ subroutine savefield (Tdomain,it,rg,icount)
                     Veloc_GLLs(n_x,n_y,n_z,1)=Tdomain%specel(n)%Veloc(n_x,n_y,n_z,0)
                     Veloc_GLLs(n_x,n_y,n_z,2)=Tdomain%specel(n)%Veloc(n_x,n_y,n_z,1)
                     Veloc_GLLs(n_x,n_y,n_z,3)=Tdomain%specel(n)%Veloc(n_x,n_y,n_z,2)
-                    Veloc_GLLs(n_x,n_y,n_z,4)=sqrt(Veloc_GLLs(n_x,n_y,n_z,1)**2+Veloc_GLLs(n_x,n_y,n_z,2)**2+Veloc_GLLs(n_x,n_y,n_z,3)**2)
+                    Veloc_GLLs(n_x,n_y,n_z,4)=sqrt(Veloc_GLLs(n_x,n_y,n_z,1)**2&
+                    +Veloc_GLLs(n_x,n_y,n_z,2)**2+Veloc_GLLs(n_x,n_y,n_z,3)**2)
 !!$                   ! Veloc_GLLs(n_x,n_y,n_z,1:6)=0.
                  enddo
               enddo
