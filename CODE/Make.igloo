@@ -2,6 +2,32 @@
 
 FC = ifort     # Fortran 90 compiler
 
+export HOSTNAME
+F90 = mpif90
+# Fortran 90 compiler for MSSMat
+#================================
+ifeq ($(HOSTNAME),wayra)
+F90 = ifort
+endif
+
+ifeq ($(HOSTNAME),shui)
+F90 = ifort
+endif
+
+ifeq ($(HOSTNAME),pyr)
+F90 = ifort
+endif
+
+ifeq ($(HOSTNAME),tourab)
+F90 = ifort
+endif
+#===============================
+
+# Fortran 90 compiler for EM2C
+ifeq ($(HOSTNAME),madness)
+F90 = /usr/voltaire/mpi.pathcc.rsh/bin/mpif90 # Fortran 90 compiler for madness
+endif
+
 OPT = -O3 -r8
 
 #OPT = -g 
