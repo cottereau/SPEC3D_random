@@ -26,3 +26,5 @@ http://www.ipgp.fr/~paulcup/RegSEM.html
 COMPILATION
 ============
 For compilation of the software under MacOSX, one should install openmpi from http://www.open-mpi.org/ or from Fink
+
+For compilation on any platform, one should have installed and compiled the library dcdflib, available from http://www.netlib.org
