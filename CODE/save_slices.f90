@@ -13,7 +13,7 @@ subroutine save_slices(Tdomain,it,rg,icount)
   integer, intent (IN) :: it,rg,icount
 
   ! local variables
-  integer :: i,n,nv,nbvert,kcount,nv_aus
+  integer :: i,n,nv,nbvert,kcount,nv_aus,ne_above,ne_left
   integer, dimension(:), allocatable:: count
   character (len=100) :: fnamef
 
@@ -53,7 +53,8 @@ subroutine save_slices(Tdomain,it,rg,icount)
 
      do ns=1,Tdomain%nbSlices
 
-        call MPI_ALLGATHER(Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize),1,MPI_INTEGER,NbElem_inSlices(ns,:),1,MPI_INTEGER, MPI_COMM_WORLD,code)
+        call MPI_ALLGATHER(Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize),1,&
+        MPI_INTEGER,NbElem_inSlices(ns,:),1,MPI_INTEGER, MPI_COMM_WORLD,code)
         if (ns .gt. 1 ) then 
            ne_above=sum(NbElem_inSlices(1:ns-1,:))
         else
@@ -172,7 +173,8 @@ call MPI_FILE_SEEK(descGeo,seek_offset,MPI_SEEK_CUR,code)
 
      do ns=1,Tdomain%nbSlices
 
-        call MPI_ALLGATHER(Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize),1,MPI_INTEGER,NbElem_inSlices(ns,:),1,MPI_INTEGER, MPI_COMM_WORLD,code)
+        call MPI_ALLGATHER(Tdomain%I_elem_inSlices(ns,Tdomain%MaxiSliceSize),1,&
+        MPI_INTEGER,NbElem_inSlices(ns,:),1,MPI_INTEGER, MPI_COMM_WORLD,code)
         if (ns .gt. 1 ) then 
            ne_above=sum(NbElem_inSlices(1:ns-1,:))
         else
