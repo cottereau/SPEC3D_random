@@ -13,7 +13,8 @@ integer, intent(IN) :: rg
 
 integer :: n, i, nf, ne, nv, mat
 
-if ((Tdomain%logicD%save_snapshots) .and. (Tdomain%Field_Order(2) .or. Tdomain%Field_Order(4) .or. Tdomain%Field_Order(5))) Tdomain%n_elem_nonPML=Tdomain%n_elem
+if ((Tdomain%logicD%save_snapshots) .and. (Tdomain%Field_Order(2) .or. &
+Tdomain%Field_Order(4) .or. Tdomain%Field_Order(5))) Tdomain%n_elem_nonPML=Tdomain%n_elem
 do n = 0,Tdomain%n_elem-1 
    mat = Tdomain%specel(n)%mat_index
    Tdomain%specel(n)%PML = .false.
@@ -22,7 +23,8 @@ do n = 0,Tdomain%n_elem-1
 
    if ((Tdomain%sSubDomain(mat)%material_type(1:1) == "P") .or. (Tdomain%sSubDomain(mat)%material_type(1:1) == "M")) then
       Tdomain%specel(n)%PML = .true.
-      if ((Tdomain%logicD%save_snapshots) .and. (Tdomain%Field_Order(2) .or. Tdomain%Field_Order(4) .or. Tdomain%Field_Order(5))) Tdomain%n_elem_nonPML=Tdomain%n_elem_nonPML-1
+      if ((Tdomain%logicD%save_snapshots) .and. (Tdomain%Field_Order(2) &
+      .or. Tdomain%Field_Order(4) .or. Tdomain%Field_Order(5))) Tdomain%n_elem_nonPML=Tdomain%n_elem_nonPML-1
    endif
 
 

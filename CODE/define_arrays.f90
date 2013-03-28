@@ -178,8 +178,8 @@ endif
              desc,NbElem,NbGlob,nbprocs,n,rg,from_scratch_format,Tdomain%SaveMecaField)
 !print *,'define_check1'
 !       if ((Tdomain%logicD%save_snapshots==.true.) .and.  (Tdomain%Field_Order(2)==.true.)) Tdomain%specel(n)%c=c
-        if (((Tdomain%logicD%save_snapshots==.true.) .and.  (Tdomain%Field_Order(2)==.true.))  .or. &
-             (Tdomain%logicD%save_energy==.true.)) Tdomain%specel(n)%c=>c
+        if (((Tdomain%logicD%save_snapshots.eqv..true.) .and.  (Tdomain%Field_Order(2).eqv..true.))  .or. &
+             (Tdomain%logicD%save_energy.eqv..true.)) Tdomain%specel(n)%c=>c
 !print *, 'check1_Tdomain%specel(n)%c(6,6,1,1,1)%',Tdomain%specel(n)%c(6,6,1,1,1)
      else
         allocate (RKmod (0:ngllx-1,0:nglly-1,0:ngllz-1))
@@ -315,103 +315,179 @@ endif
      else !Anisotropy
         if (.not. Tdomain%specel(n)%PML) then !None-PML anisotropic
 !!$        N.B : L'odre etait (au debut de l'adaptation de l'anisotropie) pour "sigma(...,4,5,6)=sigma(...,23,13,12)" mais il est pour "sigma(...,12,13,23)" dans d'autres parties du code donc, il faudrait echanger le role des indices "4" et "6" (ca y est !)  
-           Tdomain%specel(n)%Acoeff(:,:,:,0) = -Whei*(c(1,1,:,:,:)*xix**2 + c(4,4,:,:,:)*xiy**2 + c(5,5,:,:,:)*xiz**2 + 2*c(1,4,:,:,:)*xix*xiy + &
+           Tdomain%specel(n)%Acoeff(:,:,:,0) = -Whei*(c(1,1,:,:,:)*xix**2 &
+           + c(4,4,:,:,:)*xiy**2 + c(5,5,:,:,:)*xiz**2 + 2*c(1,4,:,:,:)*xix*xiy + &
                 2*c(1,5,:,:,:)*xix*xiz + 2*c(4,5,:,:,:)*xiy*xiz)*Jac 
-           Tdomain%specel(n)%Acoeff(:,:,:,1) = -Whei*(c(1,1,:,:,:)*xix*etax + c(4,4,:,:,:)*xiy*etay + c(5,5,:,:,:)*xiz*etaz + c(1,4,:,:,:)*&
+           Tdomain%specel(n)%Acoeff(:,:,:,1) = -Whei*(c(1,1,:,:,:)*xix*etax &
+           + c(4,4,:,:,:)*xiy*etay + c(5,5,:,:,:)*xiz*etaz + c(1,4,:,:,:)*&
                 (xix*etay+xiy*etax) + c(1,5,:,:,:)*(xix*etaz+xiz*etax) + c(4,5,:,:,:)*(xiy*etaz+xiz*etay))*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,2) = -Whei*(c(1,1,:,:,:)*xix*zetax + c(4,4,:,:,:)*xiy*zetay + c(5,5,:,:,:)*xiz*zetaz + c(1,4,:,:,:)*&
+           Tdomain%specel(n)%Acoeff(:,:,:,2) = -Whei*(c(1,1,:,:,:)*xix*zetax &
+           + c(4,4,:,:,:)*xiy*zetay + c(5,5,:,:,:)*xiz*zetaz + c(1,4,:,:,:)*&
                 (xix*zetay+xiy*zetax) + c(1,5,:,:,:)*(xix*zetaz+xiz*zetax) + c(4,5,:,:,:)*(xiy*zetaz+xiz*zetay))*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,3) = -Whei*(c(1,4,:,:,:)*xix**2 + c(2,4,:,:,:)*xiy**2 + c(5,6,:,:,:)*xiz**2 + (c(1,2,:,:,:)+c(4,4,:,:,:))&
+           Tdomain%specel(n)%Acoeff(:,:,:,3) = -Whei*(c(1,4,:,:,:)*xix**2 &
+           + c(2,4,:,:,:)*xiy**2 + c(5,6,:,:,:)*xiz**2 + (c(1,2,:,:,:)+c(4,4,:,:,:))&
                 *xix*xiy + (c(1,6,:,:,:)+c(4,5,:,:,:))*xix*xiz + (c(4,6,:,:,:)+c(2,5,:,:,:))*xiy*xiz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,4) = -Whei*(c(1,2,:,:,:)*xix*etay + c(1,6,:,:,:)*xix*etaz + c(1,4,:,:,:)*xix*etax + c(2,4,:,:,:)*xiy*etay + &
-                c(4,6,:,:,:)*xiy*etaz + c(4,4,:,:,:)*xiy*etax + c(2,5,:,:,:)*xiz*etay +c(5,6,:,:,:)*xiz*etaz + c(4,5,:,:,:)*xiz*etax)*Jac  
-           Tdomain%specel(n)%Acoeff(:,:,:,5) = -Whei*(c(1,2,:,:,:)*xix*zetay + c(1,6,:,:,:)*xix*zetaz + c(1,4,:,:,:)*xix*zetax + c(2,4,:,:,:)*xiy*zetay &
-                + c(4,6,:,:,:)*xiy*zetaz + c(4,4,:,:,:)*xiy*zetax + c(2,5,:,:,:)*xiz*zetay + c(5,6,:,:,:)*xiz*zetaz + c(4,5,:,:,:)*xiz*zetax)*Jac  
-           Tdomain%specel(n)%Acoeff(:,:,:,6) = -Whei*(c(1,5,:,:,:)*xix**2 + c(4,6,:,:,:)*xiy**2 + c(3,5,:,:,:)*xiz**2 + (c(1,6,:,:,:)+c(4,5,:,:,:))&
+           Tdomain%specel(n)%Acoeff(:,:,:,4) = -Whei*(c(1,2,:,:,:)*xix*etay &
+           + c(1,6,:,:,:)*xix*etaz + c(1,4,:,:,:)*xix*etax + c(2,4,:,:,:)*xiy*etay + &
+                c(4,6,:,:,:)*xiy*etaz + c(4,4,:,:,:)*xiy*etax + c(2,5,:,:,:)*xiz*etay &
+                +c(5,6,:,:,:)*xiz*etaz + c(4,5,:,:,:)*xiz*etax)*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,5) = -Whei*(c(1,2,:,:,:)*xix*zetay &
+           + c(1,6,:,:,:)*xix*zetaz + c(1,4,:,:,:)*xix*zetax + c(2,4,:,:,:)*xiy*zetay &
+                + c(4,6,:,:,:)*xiy*zetaz + c(4,4,:,:,:)*xiy*zetax + c(2,5,:,:,:)*xiz*zetay &
+                + c(5,6,:,:,:)*xiz*zetaz + c(4,5,:,:,:)*xiz*zetax)*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,6) = -Whei*(c(1,5,:,:,:)*xix**2 &
+           + c(4,6,:,:,:)*xiy**2 + c(3,5,:,:,:)*xiz**2 + (c(1,6,:,:,:)+c(4,5,:,:,:))&
                 *xix*xiy + (c(1,3,:,:,:)+c(5,5,:,:,:))*xix*xiz + (c(3,4,:,:,:)+c(5,6,:,:,:))*xiy*xiz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,7) = -Whei*(c(1,3,:,:,:)*xix*etaz + c(1,6,:,:,:)*xix*etay + c(1,5,:,:,:)*xix*etax + c(3,4,:,:,:)*xiy*etaz&
-                + c(4,6,:,:,:)*xiy*etay + c(4,5,:,:,:)*xiy*etax + c(3,5,:,:,:)*xiz*etaz + c(5,6,:,:,:)*xiz*etay + c(5,5,:,:,:)*xiz*etax)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,8) = -Whei*(c(1,3,:,:,:)*xix*zetaz + c(1,6,:,:,:)*xix*zetay + c(1,5,:,:,:)*xix*zetax + c(3,4,:,:,:)*xiy*zetaz&
-                + c(4,6,:,:,:)*xiy*zetay + c(4,5,:,:,:)*xiy*zetax + c(3,5,:,:,:)*xiz*zetaz + c(5,6,:,:,:)*xiz*zetay + c(5,5,:,:,:)*xiz*zetax)*Jac 
+           Tdomain%specel(n)%Acoeff(:,:,:,7) = -Whei*(c(1,3,:,:,:)*xix*etaz &
+           + c(1,6,:,:,:)*xix*etay + c(1,5,:,:,:)*xix*etax + c(3,4,:,:,:)*xiy*etaz&
+                + c(4,6,:,:,:)*xiy*etay + c(4,5,:,:,:)*xiy*etax + c(3,5,:,:,:)*xiz*etaz &
+                + c(5,6,:,:,:)*xiz*etay + c(5,5,:,:,:)*xiz*etax)*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,8) = -Whei*(c(1,3,:,:,:)*xix*zetaz &
+           + c(1,6,:,:,:)*xix*zetay + c(1,5,:,:,:)*xix*zetax + c(3,4,:,:,:)*xiy*zetaz&
+                + c(4,6,:,:,:)*xiy*zetay + c(4,5,:,:,:)*xiy*zetax + c(3,5,:,:,:)*xiz*zetaz &
+                + c(5,6,:,:,:)*xiz*zetay + c(5,5,:,:,:)*xiz*zetax)*Jac
            !-------------------------------------------------------
-           Tdomain%specel(n)%Acoeff(:,:,:,9) = -Whei*(c(1,1,:,:,:)*etax**2 + c(4,4,:,:,:)*etay**2 + c(5,5,:,:,:)*etaz**2 + 2*c(1,4,:,:,:)*etax*etay&
+           Tdomain%specel(n)%Acoeff(:,:,:,9) = -Whei*(c(1,1,:,:,:)*etax**2 &
+           + c(4,4,:,:,:)*etay**2 + c(5,5,:,:,:)*etaz**2 + 2*c(1,4,:,:,:)*etax*etay&
                 + 2*c(1,5,:,:,:)*etax*etaz + 2*c(4,5,:,:,:)*etay*etaz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,10) = -Whei*(c(1,1,:,:,:)*etax*zetax + c(4,4,:,:,:)*etay*zetay + c(5,5,:,:,:)*etaz*zetaz + c(1,5,:,:,:)*&
-                (etax*zetaz+etaz*zetax) + c(1,4,:,:,:)*(etax*zetay+etay*zetax) + c(4,5,:,:,:)*(etay*zetaz+etaz*zetay) )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,11) = -Whei*(c(1,2,:,:,:)*xiy*etax + c(1,6,:,:,:)*xiz*etax + c(1,4,:,:,:)*xix*etax + c(2,4,:,:,:)*xiy*etay +&
-                c(4,6,:,:,:)*xiz*etay + c(4,4,:,:,:)*xix*etay + c(2,5,:,:,:)*xiy*etaz +c(5,6,:,:,:)*xiz*etaz + c(4,5,:,:,:)*xix*etaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,12) = -Whei*(c(1,4,:,:,:)*etax**2 + c(2,4,:,:,:)*etay**2 + c(5,6,:,:,:)*etaz**2 + (c(1,2,:,:,:)+c(4,4,:,:,:))&
-                *etax*etay + (c(2,5,:,:,:)+c(4,6,:,:,:))*etay*etaz  + (c(1,6,:,:,:)+c(4,5,:,:,:))*etax*etaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,13) = -Whei*(c(1,2,:,:,:)*zetay*etax + c(1,6,:,:,:)*zetaz*etax + c(1,4,:,:,:)*zetax*etax + c(2,4,:,:,:)&
-                *zetay*etay + c(4,6,:,:,:)*zetaz*etay + c(4,4,:,:,:)*zetax*etay + c(2,5,:,:,:)*zetay*etaz +c(5,6,:,:,:)*zetaz*etaz + c(4,5,:,:,:)*zetax*etaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,14) = -Whei*(c(1,6,:,:,:)*xiy*etax + c(1,3,:,:,:)*xiz*etax + c(1,5,:,:,:)*xix*etax + c(4,6,:,:,:)*xiy*etay + &
-                c(3,4,:,:,:)*xiz*etay +c(4,5,:,:,:)*xix*etay + c(5,6,:,:,:)*xiy*etaz +c(3,5,:,:,:)*xiz*etaz + c(5,5,:,:,:)*xix*etaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,15) = -Whei*((c(1,6,:,:,:)+c(4,5,:,:,:))*etay*etax + (c(1,3,:,:,:)+c(5,5,:,:,:))*etaz*etax + (c(3,4,:,:,:)+&
-                c(5,6,:,:,:))*etaz*etay  + c(1,5,:,:,:)*etax**2 + c(4,6,:,:,:)*etay**2 + c(3,5,:,:,:)*etaz**2)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,16) = -Whei*(c(1,6,:,:,:)*zetay*etax + c(1,3,:,:,:)*zetaz*etax + c(1,5,:,:,:)*zetax*etax + c(4,6,:,:,:)&
-                *zetay*etay + c(3,4,:,:,:)*zetaz*etay +c(4,5,:,:,:)*zetax*etay + c(5,6,:,:,:)*zetay*etaz +c(3,5,:,:,:)*zetaz*etaz + c(5,5,:,:,:)*zetax*etaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,10) = -Whei*(c(1,1,:,:,:)*etax*zetax &
+           + c(4,4,:,:,:)*etay*zetay + c(5,5,:,:,:)*etaz*zetaz + c(1,5,:,:,:)*&
+                (etax*zetaz+etaz*zetax) + c(1,4,:,:,:)*(etax*zetay+etay*zetax) &
+                + c(4,5,:,:,:)*(etay*zetaz+etaz*zetay) )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,11) = -Whei*(c(1,2,:,:,:)*xiy*etax &
+           + c(1,6,:,:,:)*xiz*etax + c(1,4,:,:,:)*xix*etax + c(2,4,:,:,:)*xiy*etay +&
+                c(4,6,:,:,:)*xiz*etay + c(4,4,:,:,:)*xix*etay + c(2,5,:,:,:)*xiy*etaz &
+                +c(5,6,:,:,:)*xiz*etaz + c(4,5,:,:,:)*xix*etaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,12) = -Whei*(c(1,4,:,:,:)*etax**2 + c(2,4,:,:,:)*etay**2 &
+           + c(5,6,:,:,:)*etaz**2 + (c(1,2,:,:,:)+c(4,4,:,:,:))&
+                *etax*etay + (c(2,5,:,:,:)+c(4,6,:,:,:))*etay*etaz  + (c(1,6,:,:,:)&
+                +c(4,5,:,:,:))*etax*etaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,13) = -Whei*(c(1,2,:,:,:)*zetay*etax &
+           + c(1,6,:,:,:)*zetaz*etax + c(1,4,:,:,:)*zetax*etax + c(2,4,:,:,:)&
+                *zetay*etay + c(4,6,:,:,:)*zetaz*etay + c(4,4,:,:,:)*zetax*etay &
+                + c(2,5,:,:,:)*zetay*etaz +c(5,6,:,:,:)*zetaz*etaz + c(4,5,:,:,:)*zetax*etaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,14) = -Whei*(c(1,6,:,:,:)*xiy*etax &
+           + c(1,3,:,:,:)*xiz*etax + c(1,5,:,:,:)*xix*etax + c(4,6,:,:,:)*xiy*etay + &
+                c(3,4,:,:,:)*xiz*etay +c(4,5,:,:,:)*xix*etay + c(5,6,:,:,:)*xiy*etaz &
+                +c(3,5,:,:,:)*xiz*etaz + c(5,5,:,:,:)*xix*etaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,15) = -Whei*((c(1,6,:,:,:)+c(4,5,:,:,:))*etay*etax &
+           + (c(1,3,:,:,:)+c(5,5,:,:,:))*etaz*etax + (c(3,4,:,:,:)+&
+                c(5,6,:,:,:))*etaz*etay  + c(1,5,:,:,:)*etax**2 + c(4,6,:,:,:)*etay**2 &
+                + c(3,5,:,:,:)*etaz**2)*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,16) = -Whei*(c(1,6,:,:,:)*zetay*etax + c(1,3,:,:,:)*zetaz*etax &
+           + c(1,5,:,:,:)*zetax*etax + c(4,6,:,:,:)&
+                *zetay*etay + c(3,4,:,:,:)*zetaz*etay +c(4,5,:,:,:)*zetax*etay + c(5,6,:,:,:)*zetay*etaz &
+                +c(3,5,:,:,:)*zetaz*etaz + c(5,5,:,:,:)*zetax*etaz )*Jac
            !------------------------------------------------------
-           Tdomain%specel(n)%Acoeff(:,:,:,17) = -Whei*(c(1,1,:,:,:)*zetax**2 + c(4,4,:,:,:)*zetay**2 + c(5,5,:,:,:)*zetaz**2 + 2*c(1,4,:,:,:)*&
+           Tdomain%specel(n)%Acoeff(:,:,:,17) = -Whei*(c(1,1,:,:,:)*zetax**2 &
+           + c(4,4,:,:,:)*zetay**2 + c(5,5,:,:,:)*zetaz**2 + 2*c(1,4,:,:,:)*&
                 zetax*zetay + 2*c(1,5,:,:,:)*zetax*zetaz + 2*c(4,5,:,:,:)*zetay*zetaz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,18) = -Whei*(c(1,2,:,:,:)*xiy*zetax + c(1,6,:,:,:)*xiz*zetax + c(1,4,:,:,:)*xix*zetax + c(2,4,:,:,:)&
-                *xiy*zetay + c(4,6,:,:,:)*xiz*zetay +c(4,4,:,:,:)*xix*zetay + c(2,5,:,:,:)*xiy*zetaz +c(5,6,:,:,:)*xiz*zetaz + c(4,5,:,:,:)*xix*zetaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,19) = -Whei*(c(1,2,:,:,:)*etay*zetax + c(1,6,:,:,:)*etaz*zetax + c(1,4,:,:,:)*etax*zetax + c(2,4,:,:,:)*etay*&
-                zetay + c(4,6,:,:,:)*etaz*zetay +c(4,4,:,:,:)*etax*zetay + c(2,5,:,:,:)*etay*zetaz +c(5,6,:,:,:)*etaz*zetaz + c(4,5,:,:,:)*etax*zetaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,20) = -Whei*((c(1,2,:,:,:)+c(4,4,:,:,:))*zetax*zetay + (c(1,6,:,:,:)+ c(4,5,:,:,:))*zetax*zetaz + (c(2,5,:,:,:)+&
-                c(4,6,:,:,:))*zetay*zetaz + c(1,4,:,:,:)*zetax**2 + c(2,4,:,:,:)*zetay**2 +c(5,6,:,:,:)*zetaz**2)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,21) = -Whei*(c(1,6,:,:,:)*xiy*zetax + c(1,3,:,:,:)*xiz*zetax + c(1,5,:,:,:)*xix*zetax + c(4,6,:,:,:)*xiy*zetay +&
-                c(3,4,:,:,:)*xiz*zetay + c(4,5,:,:,:)*xix*zetay + c(5,6,:,:,:)*xiy*zetaz +c(3,5,:,:,:)*xiz*zetaz + c(5,5,:,:,:)*xix*zetaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,22) = -Whei*(c(1,6,:,:,:)*etay*zetax + c(1,3,:,:,:)*etaz*zetax + c(1,5,:,:,:)*etax*zetax + c(4,6,:,:,:)*etay*&
-                zetay + c(3,4,:,:,:)*etaz*zetay +c(4,5,:,:,:)*etax*zetay + c(5,6,:,:,:)*etay*zetaz +c(3,5,:,:,:)*etaz*zetaz + c(5,5,:,:,:)*etax*zetaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,23) = -Whei*((c(1,6,:,:,:)+c(4,5,:,:,:))*zetax*zetay + (c(1,3,:,:,:)+c(5,5,:,:,:))*zetax*zetaz + (c(3,4,:,:,:)+&
-                c(5,6,:,:,:))*zetay*zetaz + c(1,5,:,:,:)*zetax**2 + c(4,6,:,:,:)*zetay**2 + c(3,5,:,:,:)*zetaz**2)*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,18) = -Whei*(c(1,2,:,:,:)*xiy*zetax &
+           + c(1,6,:,:,:)*xiz*zetax + c(1,4,:,:,:)*xix*zetax + c(2,4,:,:,:)&
+                *xiy*zetay + c(4,6,:,:,:)*xiz*zetay +c(4,4,:,:,:)*xix*zetay &
+                + c(2,5,:,:,:)*xiy*zetaz +c(5,6,:,:,:)*xiz*zetaz + c(4,5,:,:,:)*xix*zetaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,19) = -Whei*(c(1,2,:,:,:)*etay*zetax &
+           + c(1,6,:,:,:)*etaz*zetax + c(1,4,:,:,:)*etax*zetax + c(2,4,:,:,:)*etay*&
+                zetay + c(4,6,:,:,:)*etaz*zetay +c(4,4,:,:,:)*etax*zetay &
+                + c(2,5,:,:,:)*etay*zetaz +c(5,6,:,:,:)*etaz*zetaz + c(4,5,:,:,:)*etax*zetaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,20) = -Whei*((c(1,2,:,:,:)+c(4,4,:,:,:))*zetax*zetay &
+           + (c(1,6,:,:,:)+ c(4,5,:,:,:))*zetax*zetaz + (c(2,5,:,:,:)+&
+                c(4,6,:,:,:))*zetay*zetaz + c(1,4,:,:,:)*zetax**2 + c(2,4,:,:,:)*zetay**2 &
+                +c(5,6,:,:,:)*zetaz**2)*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,21) = -Whei*(c(1,6,:,:,:)*xiy*zetax &
+           + c(1,3,:,:,:)*xiz*zetax + c(1,5,:,:,:)*xix*zetax + c(4,6,:,:,:)*xiy*zetay +&
+                c(3,4,:,:,:)*xiz*zetay + c(4,5,:,:,:)*xix*zetay + c(5,6,:,:,:)*xiy*zetaz &
+                +c(3,5,:,:,:)*xiz*zetaz + c(5,5,:,:,:)*xix*zetaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,22) = -Whei*(c(1,6,:,:,:)*etay*zetax &
+           + c(1,3,:,:,:)*etaz*zetax + c(1,5,:,:,:)*etax*zetax + c(4,6,:,:,:)*etay*&
+                zetay + c(3,4,:,:,:)*etaz*zetay +c(4,5,:,:,:)*etax*zetay &
+                + c(5,6,:,:,:)*etay*zetaz +c(3,5,:,:,:)*etaz*zetaz + c(5,5,:,:,:)*etax*zetaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,23) = -Whei*((c(1,6,:,:,:)+c(4,5,:,:,:))*zetax*zetay &
+           + (c(1,3,:,:,:)+c(5,5,:,:,:))*zetax*zetaz + (c(3,4,:,:,:)+&
+                c(5,6,:,:,:))*zetay*zetaz + c(1,5,:,:,:)*zetax**2 + c(4,6,:,:,:)*zetay**2 &
+                + c(3,5,:,:,:)*zetaz**2)*Jac
            !-----------------------------------------------------
-           Tdomain%specel(n)%Acoeff(:,:,:,24) = -Whei*(c(4,4,:,:,:)*xix**2 + c(2,2,:,:,:)*xiy**2 + c(6,6,:,:,:)*xiz**2 + 2*c(2,4,:,:,:)*xix*xiy + &
+           Tdomain%specel(n)%Acoeff(:,:,:,24) = -Whei*(c(4,4,:,:,:)*xix**2 &
+           + c(2,2,:,:,:)*xiy**2 + c(6,6,:,:,:)*xiz**2 + 2*c(2,4,:,:,:)*xix*xiy + &
                 2*c(4,6,:,:,:)*xix*xiz + 2*c(2,6,:,:,:)*xiy*xiz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,25) = -Whei*(c(4,4,:,:,:)*xix*etax + c(2,2,:,:,:)*xiy*etay + c(6,6,:,:,:)*xiz*etaz + c(2,4,:,:,:)*&
-                (xix*etay+xiy*etax) + c(4,6,:,:,:)*(xix*etaz+xiz*etax) + c(2,6,:,:,:)*(xiy*etaz+xiz*etay))*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,26) = -Whei*(c(4,4,:,:,:)*xix*zetax + c(2,2,:,:,:)*xiy*zetay + c(6,6,:,:,:)*xiz*zetaz + c(2,4,:,:,:)*&
-                (xix*zetay+xiy*zetax) + c(4,6,:,:,:)*(xix*zetaz+xiz*zetax) + c(2,6,:,:,:)*(xiy*zetaz+xiz*zetay))*Jac 
-           Tdomain%specel(n)%Acoeff(:,:,:,27) = -Whei*(c(4,5,:,:,:)*xix**2 + c(2,6,:,:,:)*xiy**2 + c(3,6,:,:,:)*xiz**2 + (c(2,5,:,:,:)+c(4,6,:,:,:))*&
-                xix*xiy + (c(5,6,:,:,:)+c(3,4,:,:,:))*xix*xiz + (c(6,6,:,:,:)+c(2,3,:,:,:))*xiy*xiz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,28) = -Whei*(c(4,6,:,:,:)*etay*xix + c(3,4,:,:,:)*etaz*xix + c(4,5,:,:,:)*etax*xix + c(2,6,:,:,:)*etay*xiy + &
-                c(2,3,:,:,:)*etaz*xiy + c(2,5,:,:,:)*etax*xiy + c(6,6,:,:,:)*etay*xiz +c(3,6,:,:,:)*etaz*xiz + c(5,6,:,:,:)*etax*xiz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,29) = -Whei*(c(4,6,:,:,:)*zetay*xix + c(3,4,:,:,:)*zetaz*xix + c(4,5,:,:,:)*zetax*xix + c(2,6,:,:,:)*zetay*xiy +&
-                c(2,3,:,:,:)*zetaz*xiy + c(2,5,:,:,:)*zetax*xiy + c(6,6,:,:,:)*zetay*xiz +c(3,6,:,:,:)*zetaz*xiz + c(5,6,:,:,:)*zetax*xiz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,25) = -Whei*(c(4,4,:,:,:)*xix*etax &
+           + c(2,2,:,:,:)*xiy*etay + c(6,6,:,:,:)*xiz*etaz + c(2,4,:,:,:)*&
+                (xix*etay+xiy*etax) + c(4,6,:,:,:)*(xix*etaz+xiz*etax) &
+                + c(2,6,:,:,:)*(xiy*etaz+xiz*etay))*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,26) = -Whei*(c(4,4,:,:,:)*xix*zetax &
+           + c(2,2,:,:,:)*xiy*zetay + c(6,6,:,:,:)*xiz*zetaz + c(2,4,:,:,:)*&
+                (xix*zetay+xiy*zetax) + c(4,6,:,:,:)*(xix*zetaz+xiz*zetax) &
+                + c(2,6,:,:,:)*(xiy*zetaz+xiz*zetay))*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,27) = -Whei*(c(4,5,:,:,:)*xix**2 &
+           + c(2,6,:,:,:)*xiy**2 + c(3,6,:,:,:)*xiz**2 + (c(2,5,:,:,:)+c(4,6,:,:,:))*&
+                xix*xiy + (c(5,6,:,:,:)+c(3,4,:,:,:))*xix*xiz + (c(6,6,:,:,:)&
+                +c(2,3,:,:,:))*xiy*xiz)*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,28) = -Whei*(c(4,6,:,:,:)*etay*xix &
+           + c(3,4,:,:,:)*etaz*xix + c(4,5,:,:,:)*etax*xix + c(2,6,:,:,:)*etay*xiy + &
+                c(2,3,:,:,:)*etaz*xiy + c(2,5,:,:,:)*etax*xiy + c(6,6,:,:,:)*etay*xiz &
+                +c(3,6,:,:,:)*etaz*xiz + c(5,6,:,:,:)*etax*xiz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,29) = -Whei*(c(4,6,:,:,:)*zetay*xix &
+           + c(3,4,:,:,:)*zetaz*xix + c(4,5,:,:,:)*zetax*xix + c(2,6,:,:,:)*zetay*xiy +&
+                c(2,3,:,:,:)*zetaz*xiy + c(2,5,:,:,:)*zetax*xiy + c(6,6,:,:,:)*zetay*xiz &
+                +c(3,6,:,:,:)*zetaz*xiz + c(5,6,:,:,:)*zetax*xiz )*Jac
            !-----------------------------------------------------
-           Tdomain%specel(n)%Acoeff(:,:,:,30) = -Whei*(c(4,4,:,:,:)*etax**2 + c(2,2,:,:,:)*etay**2 + c(6,6,:,:,:)*etaz**2 + 2*c(2,4,:,:,:)*etax*etay + &
+           Tdomain%specel(n)%Acoeff(:,:,:,30) = -Whei*(c(4,4,:,:,:)*etax**2 &
+           + c(2,2,:,:,:)*etay**2 + c(6,6,:,:,:)*etaz**2 + 2*c(2,4,:,:,:)*etax*etay + &
                 2*c(4,6,:,:,:)*etax*etaz + 2*c(2,6,:,:,:)*etay*etaz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,31) = -Whei*(c(4,4,:,:,:)*etax*zetax + c(2,2,:,:,:)*etay*zetay + c(6,6,:,:,:)*etaz*zetaz + c(2,4,:,:,:)*&
-                (etax*zetay+etay*zetax) + c(4,6,:,:,:)*(etax*zetaz+etaz*zetax) + c(2,6,:,:,:)*(etay*zetaz+etaz*zetay))*Jac 
-           Tdomain%specel(n)%Acoeff(:,:,:,32) = -Whei*(c(4,6,:,:,:)*xiy*etax + c(3,4,:,:,:)*xiz*etax + c(4,5,:,:,:)*xix*etax + c(2,6,:,:,:)*xiy*etay + &
-                c(2,3,:,:,:)*xiz*etay + c(2,5,:,:,:)*xix*etay + c(6,6,:,:,:)*xiy*etaz +c(3,6,:,:,:)*xiz*etaz + c(5,6,:,:,:)*xix*etaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,33) = -Whei*(c(4,5,:,:,:)*etax**2 + c(2,6,:,:,:)*etay**2 + c(3,6,:,:,:)*etaz**2 + (c(2,5,:,:,:)+c(4,6,:,:,:))*&
-                etax*etay + (c(5,6,:,:,:)+c(3,4,:,:,:))*etax*etaz + (c(6,6,:,:,:)+c(2,3,:,:,:))*etay*etaz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,34) = -Whei*(c(4,6,:,:,:)*zetay*etax + c(3,4,:,:,:)*zetaz*etax + c(4,5,:,:,:)*zetax*etax + c(2,6,:,:,:)* zetay*&
-                etay + c(2,3,:,:,:)*zetaz*etay +  c(2,5,:,:,:)*zetax*etay + c(6,6,:,:,:)*zetay*etaz +c(3,6,:,:,:)*zetaz*etaz + c(5,6,:,:,:)*zetax*etaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,31) = -Whei*(c(4,4,:,:,:)*etax*zetax &
+           + c(2,2,:,:,:)*etay*zetay + c(6,6,:,:,:)*etaz*zetaz + c(2,4,:,:,:)*&
+                (etax*zetay+etay*zetax) + c(4,6,:,:,:)*(etax*zetaz+etaz*zetax) &
+                + c(2,6,:,:,:)*(etay*zetaz+etaz*zetay))*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,32) = -Whei*(c(4,6,:,:,:)*xiy*etax + c(3,4,:,:,:)*xiz*etax &
+           + c(4,5,:,:,:)*xix*etax + c(2,6,:,:,:)*xiy*etay + &
+                c(2,3,:,:,:)*xiz*etay + c(2,5,:,:,:)*xix*etay + c(6,6,:,:,:)*xiy*etaz &
+                +c(3,6,:,:,:)*xiz*etaz + c(5,6,:,:,:)*xix*etaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,33) = -Whei*(c(4,5,:,:,:)*etax**2 + c(2,6,:,:,:)*etay**2 &
+           + c(3,6,:,:,:)*etaz**2 + (c(2,5,:,:,:)+c(4,6,:,:,:))*&
+                etax*etay + (c(5,6,:,:,:)+c(3,4,:,:,:))*etax*etaz + (c(6,6,:,:,:)&
+                +c(2,3,:,:,:))*etay*etaz)*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,34) = -Whei*(c(4,6,:,:,:)*zetay*etax &
+           + c(3,4,:,:,:)*zetaz*etax + c(4,5,:,:,:)*zetax*etax + c(2,6,:,:,:)* zetay*&
+                etay + c(2,3,:,:,:)*zetaz*etay +  c(2,5,:,:,:)*zetax*etay + c(6,6,:,:,:)*zetay*etaz &
+                +c(3,6,:,:,:)*zetaz*etaz + c(5,6,:,:,:)*zetax*etaz )*Jac
            !-----------------------------------------------------
-           Tdomain%specel(n)%Acoeff(:,:,:,35) = -Whei*(c(4,4,:,:,:)*zetax**2 + c(2,2,:,:,:)*zetay**2 + c(6,6,:,:,:)*zetaz**2 + 2*c(2,4,:,:,:)*zetax*zetay+&
+           Tdomain%specel(n)%Acoeff(:,:,:,35) = -Whei*(c(4,4,:,:,:)*zetax**2 + c(2,2,:,:,:)*zetay**2 &
+           + c(6,6,:,:,:)*zetaz**2 + 2*c(2,4,:,:,:)*zetax*zetay+&
                 2*c(4,6,:,:,:)*zetax*zetaz + 2*c(2,6,:,:,:)*zetay*zetaz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,36) = -Whei*(c(4,6,:,:,:)*xiy*zetax + c(3,4,:,:,:)*xiz*zetax + c(4,5,:,:,:)*xix*zetax + c(2,6,:,:,:)*xiy*zetay + &
-                c(2,3,:,:,:)*xiz*zetay +c(2,5,:,:,:)*xix*zetay + c(6,6,:,:,:)*xiy*zetaz +c(3,6,:,:,:)*xiz*zetaz + c(5,6,:,:,:)*xix*zetaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,37) = -Whei*(c(4,6,:,:,:)*etay*zetax + c(3,4,:,:,:)*etaz*zetax + c(4,5,:,:,:)*etax*zetax + c(2,6,:,:,:)*etay*&
-                zetay + c(2,3,:,:,:)*etaz*zetay +c(2,5,:,:,:)*etax*zetay + c(6,6,:,:,:)*etay*zetaz +c(3,6,:,:,:)*etaz*zetaz + c(5,6,:,:,:)*etax*zetaz )*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,38) = -Whei*(c(4,5,:,:,:)*zetax**2 + c(2,6,:,:,:)*zetay**2 + c(3,6,:,:,:)*zetaz**2 + (c(2,5,:,:,:)+c(4,6,:,:,:))*&
-                zetax*zetay + (c(5,6,:,:,:)+c(3,4,:,:,:))*zetax*zetaz + (c(6,6,:,:,:)+c(2,3,:,:,:))*zetay*zetaz)*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,36) = -Whei*(c(4,6,:,:,:)*xiy*zetax + c(3,4,:,:,:)*xiz*zetax &
+           + c(4,5,:,:,:)*xix*zetax + c(2,6,:,:,:)*xiy*zetay + &
+                c(2,3,:,:,:)*xiz*zetay +c(2,5,:,:,:)*xix*zetay + c(6,6,:,:,:)*xiy*zetaz &
+                +c(3,6,:,:,:)*xiz*zetaz + c(5,6,:,:,:)*xix*zetaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,37) = -Whei*(c(4,6,:,:,:)*etay*zetax + c(3,4,:,:,:)*etaz*zetax &
+           + c(4,5,:,:,:)*etax*zetax + c(2,6,:,:,:)*etay*&
+                zetay + c(2,3,:,:,:)*etaz*zetay +c(2,5,:,:,:)*etax*zetay + c(6,6,:,:,:)*etay*zetaz &
+                +c(3,6,:,:,:)*etaz*zetaz + c(5,6,:,:,:)*etax*zetaz )*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,38) = -Whei*(c(4,5,:,:,:)*zetax**2 + c(2,6,:,:,:)*zetay**2 &
+           + c(3,6,:,:,:)*zetaz**2 + (c(2,5,:,:,:)+c(4,6,:,:,:))*&
+                zetax*zetay + (c(5,6,:,:,:)+c(3,4,:,:,:))*zetax*zetaz + (c(6,6,:,:,:)&
+                +c(2,3,:,:,:))*zetay*zetaz)*Jac
            !-----------------------------------------------------
-           Tdomain%specel(n)%Acoeff(:,:,:,39) = -Whei*(c(5,5,:,:,:)*xix**2 + c(6,6,:,:,:)*xiy**2 + c(3,3,:,:,:)*xiz**2 + 2*c(5,6,:,:,:)*xix*xiy + &
+           Tdomain%specel(n)%Acoeff(:,:,:,39) = -Whei*(c(5,5,:,:,:)*xix**2 + c(6,6,:,:,:)*xiy**2 &
+           + c(3,3,:,:,:)*xiz**2 + 2*c(5,6,:,:,:)*xix*xiy + &
                 2*c(3,5,:,:,:)*xix*xiz + 2*c(3,6,:,:,:)*xiy*xiz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,40) = -Whei*(c(5,5,:,:,:)*xix*etax + c(6,6,:,:,:)*xiy*etay + c(3,3,:,:,:)*xiz*etaz + c(5,6,:,:,:)*(xix*etay+xiy*&
+           Tdomain%specel(n)%Acoeff(:,:,:,40) = -Whei*(c(5,5,:,:,:)*xix*etax + c(6,6,:,:,:)*xiy*etay &
+           + c(3,3,:,:,:)*xiz*etaz + c(5,6,:,:,:)*(xix*etay+xiy*&
                 etax) + c(3,5,:,:,:)*(xix*etaz+xiz*etax) + c(3,6,:,:,:)*(xiy*etaz+xiz*etay))*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,41) = -Whei*(c(5,5,:,:,:)*xix*zetax + c(6,6,:,:,:)*xiy*zetay + c(3,3,:,:,:)*xiz*zetaz + c(5,6,:,:,:)*&
-                (xix*zetay+xiy*zetax) + c(3,5,:,:,:)*(xix*zetaz+xiz*zetax) + c(3,6,:,:,:)*(xiy*zetaz+xiz*zetay))*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,41) = -Whei*(c(5,5,:,:,:)*xix*zetax + c(6,6,:,:,:)*xiy*zetay &
+           + c(3,3,:,:,:)*xiz*zetaz + c(5,6,:,:,:)*&
+                (xix*zetay+xiy*zetax) + c(3,5,:,:,:)*(xix*zetaz+xiz*zetax) &
+                + c(3,6,:,:,:)*(xiy*zetaz+xiz*zetay))*Jac
            !-----------------------------------------------------
-           Tdomain%specel(n)%Acoeff(:,:,:,42) = -Whei*(c(5,5,:,:,:)*etax**2 + c(6,6,:,:,:)*etay**2 + c(3,3,:,:,:)*etaz**2 + 2*c(5,6,:,:,:)*etax*etay + &
+           Tdomain%specel(n)%Acoeff(:,:,:,42) = -Whei*(c(5,5,:,:,:)*etax**2 + c(6,6,:,:,:)*etay**2 &
+           + c(3,3,:,:,:)*etaz**2 + 2*c(5,6,:,:,:)*etax*etay + &
                 2*c(3,5,:,:,:)*etax*etaz + 2*c(3,6,:,:,:)*etay*etaz)*Jac
-           Tdomain%specel(n)%Acoeff(:,:,:,43) = -Whei*(c(5,5,:,:,:)*etax*zetax + c(6,6,:,:,:)*etay*zetay + c(3,3,:,:,:)*etaz*zetaz + c(5,6,:,:,:)*&
-                (etax*zetay+etay*zetax) + c(3,5,:,:,:)*(etax*zetaz+etaz*zetax) + c(3,6,:,:,:)*(etay*zetaz+etaz*zetay))*Jac
+           Tdomain%specel(n)%Acoeff(:,:,:,43) = -Whei*(c(5,5,:,:,:)*etax*zetax + c(6,6,:,:,:)*etay*zetay &
+           + c(3,3,:,:,:)*etaz*zetaz + c(5,6,:,:,:)*&
+                (etax*zetay+etay*zetax) + c(3,5,:,:,:)*(etax*zetaz+etaz*zetax) &
+                + c(3,6,:,:,:)*(etay*zetaz+etaz*zetay))*Jac
            !-----------------------------------------------------
-           Tdomain%specel(n)%Acoeff(:,:,:,44) = -Whei*(c(5,5,:,:,:)*zetax**2 + c(6,6,:,:,:)*zetay**2 + c(3,3,:,:,:)*zetaz**2 + 2*c(5,6,:,:,:)*zetax*zetay +&
+           Tdomain%specel(n)%Acoeff(:,:,:,44) = -Whei*(c(5,5,:,:,:)*zetax**2 + c(6,6,:,:,:)*zetay**2 &
+           + c(3,3,:,:,:)*zetaz**2 + 2*c(5,6,:,:,:)*zetax*zetay +&
                 2*c(3,5,:,:,:)*zetax*zetaz + 2*c(3,6,:,:,:)*zetay*zetaz)*Jac
 
 
@@ -812,13 +888,19 @@ endif
            Tdomain%specel(n)%DumpMass(:,:,:,2) =  Tdomain%specel(n)%Density * Whei * Jac * wz * & 
                 Tdomain%sSubdomain(mat)%Dt * 0.5 * Tdomain%sSubdomain(mat)%freq
 
-           Tdomain%specel(n)%Isx = Tdomain%sSubdomain(mat)%Dt * wx * Tdomain%sSubdomain(mat)%freq * Tdomain%specel(n)%DumpSx(:,:,:,1)     
-           Tdomain%specel(n)%Isy = Tdomain%sSubdomain(mat)%Dt * wy * Tdomain%sSubdomain(mat)%freq * Tdomain%specel(n)%DumpSy(:,:,:,1)     
-           Tdomain%specel(n)%Isz = Tdomain%sSubdomain(mat)%Dt * wz * Tdomain%sSubdomain(mat)%freq * Tdomain%specel(n)%DumpSz(:,:,:,1)     
+           Tdomain%specel(n)%Isx = Tdomain%sSubdomain(mat)%Dt * wx &
+           * Tdomain%sSubdomain(mat)%freq * Tdomain%specel(n)%DumpSx(:,:,:,1)
+           Tdomain%specel(n)%Isy = Tdomain%sSubdomain(mat)%Dt * wy &
+           * Tdomain%sSubdomain(mat)%freq * Tdomain%specel(n)%DumpSy(:,:,:,1)
+           Tdomain%specel(n)%Isz = Tdomain%sSubdomain(mat)%Dt * wz &
+           * Tdomain%sSubdomain(mat)%freq * Tdomain%specel(n)%DumpSz(:,:,:,1)
 
-           Tdomain%specel(n)%Ivx = Tdomain%specel(n)%Density * Whei * Tdomain%sSubdomain(mat)%Dt * wx * Jac * Tdomain%sSubdomain(mat)%freq 
-           Tdomain%specel(n)%Ivy = Tdomain%specel(n)%Density * Whei * Tdomain%sSubdomain(mat)%Dt * wy * Jac * Tdomain%sSubdomain(mat)%freq 
-           Tdomain%specel(n)%Ivz = Tdomain%specel(n)%Density * Whei * Tdomain%sSubdomain(mat)%Dt * wz * Jac * Tdomain%sSubdomain(mat)%freq 
+           Tdomain%specel(n)%Ivx = Tdomain%specel(n)%Density * Whei &
+           * Tdomain%sSubdomain(mat)%Dt * wx * Jac * Tdomain%sSubdomain(mat)%freq
+           Tdomain%specel(n)%Ivy = Tdomain%specel(n)%Density * Whei &
+           * Tdomain%sSubdomain(mat)%Dt * wy * Jac * Tdomain%sSubdomain(mat)%freq
+           Tdomain%specel(n)%Ivz = Tdomain%specel(n)%Density * Whei &
+           * Tdomain%sSubdomain(mat)%Dt * wz * Jac * Tdomain%sSubdomain(mat)%freq
 
         else ! Normal PML
 
@@ -1412,7 +1494,8 @@ endif
               enddo
            else if ( Tdomain%sComm(n)%orient_edges_Neu(i) == 1 ) then 
               do j = 1,Tdomain%sNeu%nEdge(ne)%ngll-2
-                 Tdomain%sNeu%nEdge(ne)%Btn(ngll1-1-j,0:2) = Tdomain%sNeu%nEdge(ne)%Btn(ngll1-1-j,0:2) + Tdomain%sComm(n)%TakeSO(ngllSO,0:2)
+                 Tdomain%sNeu%nEdge(ne)%Btn(ngll1-1-j,0:2) = &
+                 Tdomain%sNeu%nEdge(ne)%Btn(ngll1-1-j,0:2) + Tdomain%sComm(n)%TakeSO(ngllSO,0:2)
                  ngllSO = ngllSO + 1
               enddo
            else 

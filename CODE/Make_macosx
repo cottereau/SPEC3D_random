@@ -40,7 +40,7 @@ MODULE_OPTION = ./Modules/
 
 PATH_INCLU = /usr/include/
 
-F90FLAGS = $(MMOD) $(MODULEDIR) -I $(PATH_INCLU)
+F90FLAGS = $(MMOD) -I $(MODULEDIR) -I $(PATH_INCLU)
 
 OBJ = $(patsubst %.f90,%.o, $(wildcard *.f90) )
 

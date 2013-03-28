@@ -167,7 +167,8 @@ subroutine SourcePosition(Tdomain,rg,nb_procs)
            enddo
         enddo
         Tdomain%sSource(n_src)%proc(rg)%nr=nearestGLL_inno
-        print ('(" SOURCEPOSITION::Always Me, the",i2, "th source, I''m now already in the proc ",i2, " and being shared by ",i2," elements.")'), n_src+1,rg,nearestGLL_inno
+        print ('(" SOURCEPOSITION::Always Me, the",i2, "th source, &
+        I''m now already in the proc ",i2, " and being shared by ",i2," elements.")'), n_src+1,rg,nearestGLL_inno
      endif
      call MPI_ALLREDUCE(nearestGLL_inno,n_sharing_source,1,MPI_INTEGER,MPI_SUM,MPI_COMM_WORLD,code)    
      print *,'SOURCEPOSITION::elts sharing total',n_sharing_source,rg
@@ -182,12 +183,16 @@ subroutine SourcePosition(Tdomain,rg,nb_procs)
               allocate  (Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%ExtForce(0:ngllx-1,0:nglly-1,0:ngllz-1))
 
               do iz = 0,ngllz-1
-                 call pol_lagrange ('v',ngllz, Tdomain%sSubdomain(mat)%GLLcz, iz, Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%zeta,wzeta)
+                 call pol_lagrange ('v',ngllz, Tdomain%sSubdomain(mat)%GLLcz, iz, &
+                 Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%zeta,wzeta)
                  do iy = 0,nglly-1
-                    call pol_lagrange ('v',nglly, Tdomain%sSubdomain(mat)%GLLcy, iy, Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%eta, weta )
+                    call pol_lagrange ('v',nglly, Tdomain%sSubdomain(mat)%GLLcy, iy, &
+                    Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%eta, weta )
                     do ix = 0,ngllx-1
-                       call pol_lagrange ('v',ngllx, Tdomain%sSubdomain(mat)%GLLcx, ix, Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%xi, wxi )
-                       Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%ExtForce (ix,iy,iz) = wxi*weta*wzeta/n_sharing_source
+                       call pol_lagrange ('v',ngllx, Tdomain%sSubdomain(mat)%GLLcx, ix, &
+                       Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%xi, wxi )
+                       Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%ExtForce (ix,iy,iz) &
+                       = wxi*weta*wzeta/n_sharing_source
                     enddo
                  enddo
               enddo
@@ -231,14 +236,19 @@ subroutine SourcePosition(Tdomain,rg,nb_procs)
               do iz = 0,ngllz-1
                  do iy = 0,nglly-1
                     do ix = 0,ngllx-1
-                       xi_vector(0)= Tdomain%sSubdomain(mat)%hprimex(ix,ix) * Tdomain%sSubdomain(mat)%GLLwy(iy) * Tdomain%sSubdomain(mat)%GLLwz(iz)
-                       xi_vector(1)= Tdomain%sSubdomain(mat)%hprimey(iy,iy) * Tdomain%sSubdomain(mat)%GLLwx(ix) * Tdomain%sSubdomain(mat)%GLLwz(iz)
-                       xi_vector(2)= Tdomain%sSubdomain(mat)%hprimez(iz,iz) * Tdomain%sSubdomain(mat)%GLLwy(iy) * Tdomain%sSubdomain(mat)%GLLwx(ix)
+                       xi_vector(0)= Tdomain%sSubdomain(mat)%hprimex(ix,ix) &
+                       * Tdomain%sSubdomain(mat)%GLLwy(iy) * Tdomain%sSubdomain(mat)%GLLwz(iz)
+                       xi_vector(1)= Tdomain%sSubdomain(mat)%hprimey(iy,iy) &
+                       * Tdomain%sSubdomain(mat)%GLLwx(ix) * Tdomain%sSubdomain(mat)%GLLwz(iz)
+                       xi_vector(2)= Tdomain%sSubdomain(mat)%hprimez(iz,iz) &
+                       * Tdomain%sSubdomain(mat)%GLLwy(iy) * Tdomain%sSubdomain(mat)%GLLwx(ix)
                        !DGEMV :: Y:=Alpha*A*X+Beta*Y
                        call DGEMV ('N',3,3,1./n_sharing_source,&!TransA,size(A,1),size(A,2),Alpha
-                            Tdomain%specel(Tdomain%Ssource(n_src)%proc(rg)%elem(ind_nearestGLL_inno)%indspecel)%InvGrad (ix,iy,iz, 0:2,0:2),3,&!A,LdA
+                            Tdomain%specel(Tdomain%Ssource(n_src)%proc(rg)&
+                            %elem(ind_nearestGLL_inno)%indspecel)%InvGrad (ix,iy,iz, 0:2,0:2),3,&!A,LdA
                             xi_vector,1,0.,&!X,X's ind increment,Beta 
-                            Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)%Explosion (ix,iy,iz,:),1&! Y,Y's ind increment 
+                            Tdomain%sSource(n_src)%proc(rg)%Elem(ind_nearestGLL_inno)&
+                            %Explosion (ix,iy,iz,:),1&! Y,Y's ind increment
                             )
                     enddo
                  enddo

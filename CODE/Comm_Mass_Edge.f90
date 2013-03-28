@@ -42,7 +42,8 @@ do i = 0,Tdomain%sComm(n)%nb_edges-1
      enddo
      if (Tdomain%sEdge(ne)%PML) then
         do j = 1,Tdomain%sEdge(ne)%ngll-2
-           Tdomain%sEdge(ne)%DumpMass(ngll1-1-j,0:2) = Tdomain%sEdge(ne)%DumpMass(ngll1-1-j,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
+           Tdomain%sEdge(ne)%DumpMass(ngll1-1-j,0:2) = Tdomain%sEdge(ne)%DumpMass(ngll1-1-j,0:2) &
+           + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
            if (Tdomain%any_FPML) then
               Tdomain%sEdge(ne)%Ivx(ngll1-1-j) = Tdomain%sEdge(ne)%Ivx(ngll1-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,3)
               Tdomain%sEdge(ne)%Ivy(ngll1-1-j) = Tdomain%sEdge(ne)%Ivy(ngll1-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,4)

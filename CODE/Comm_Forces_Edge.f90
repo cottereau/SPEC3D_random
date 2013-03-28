@@ -39,9 +39,12 @@ do i = 0,Tdomain%sComm(n)%nb_edges-1
     enddo
     if (Tdomain%sEdge(ne)%PML) then
       do j = 1,Tdomain%sEdge(ne)%ngll-2
-          Tdomain%sEdge(ne)%Forces1(ngll1-1-j,0:2) = Tdomain%sEdge(ne)%Forces1(ngll1-1-j,0:2) + Tdomain%sComm(n)%TakeForcesPML(ngllPML,1,0:2)
-          Tdomain%sEdge(ne)%Forces2(ngll1-1-j,0:2) = Tdomain%sEdge(ne)%Forces2(ngll1-1-j,0:2) + Tdomain%sComm(n)%TakeForcesPML(ngllPML,2,0:2)
-          Tdomain%sEdge(ne)%Forces3(ngll1-1-j,0:2) = Tdomain%sEdge(ne)%Forces3(ngll1-1-j,0:2) + Tdomain%sComm(n)%TakeForcesPML(ngllPML,3,0:2)
+          Tdomain%sEdge(ne)%Forces1(ngll1-1-j,0:2) = Tdomain%sEdge(ne)%Forces1(ngll1-1-j,0:2) &
+          + Tdomain%sComm(n)%TakeForcesPML(ngllPML,1,0:2)
+          Tdomain%sEdge(ne)%Forces2(ngll1-1-j,0:2) = Tdomain%sEdge(ne)%Forces2(ngll1-1-j,0:2) &
+          + Tdomain%sComm(n)%TakeForcesPML(ngllPML,2,0:2)
+          Tdomain%sEdge(ne)%Forces3(ngll1-1-j,0:2) = Tdomain%sEdge(ne)%Forces3(ngll1-1-j,0:2) &
+          + Tdomain%sComm(n)%TakeForcesPML(ngllPML,3,0:2)
           ngllPML = ngllPML + 1
       enddo
     endif

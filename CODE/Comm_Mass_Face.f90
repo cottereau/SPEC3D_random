@@ -52,7 +52,8 @@ subroutine Comm_Mass_Face (Tdomain,n,ngll,ngllPML)
         if (Tdomain%sFace(nf)%PML) then
            do j = 1,Tdomain%sFace(nf)%ngll2-2
               do k = 1,Tdomain%sFace(nf)%ngll1-2
-                 Tdomain%sFace(nf)%DumpMass(ngll1-1-k,j,0:2) = Tdomain%sFace(nf)%DumpMass(ngll1-1-k,j,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
+                 Tdomain%sFace(nf)%DumpMass(ngll1-1-k,j,0:2) = Tdomain%sFace(nf)%DumpMass(ngll1-1-k,j,0:2) &
+                 + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
                  if (Tdomain%any_FPML) then
                     Tdomain%sFace(nf)%Ivx(ngll1-1-k,j) = Tdomain%sFace(nf)%Ivx(ngll1-1-k,j) + Tdomain%sComm(n)%TakePML(ngllPML,3)
                     Tdomain%sFace(nf)%Ivy(ngll1-1-k,j) = Tdomain%sFace(nf)%Ivy(ngll1-1-k,j) + Tdomain%sComm(n)%TakePML(ngllPML,4)
@@ -74,7 +75,8 @@ subroutine Comm_Mass_Face (Tdomain,n,ngll,ngllPML)
         if (Tdomain%sFace(nf)%PML) then
            do j = 1,Tdomain%sFace(nf)%ngll2-2
               do k = 1,Tdomain%sFace(nf)%ngll1-2
-                 Tdomain%sFace(nf)%DumpMass(k,ngll2-1-j,0:2) = Tdomain%sFace(nf)%DumpMass(k,ngll2-1-j,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
+                 Tdomain%sFace(nf)%DumpMass(k,ngll2-1-j,0:2) = Tdomain%sFace(nf)%DumpMass(k,ngll2-1-j,0:2) &
+                 + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
                  if (Tdomain%any_FPML) then
                     Tdomain%sFace(nf)%Ivx(k,ngll2-1-j) = Tdomain%sFace(nf)%Ivx(k,ngll2-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,3)
                     Tdomain%sFace(nf)%Ivy(k,ngll2-1-j) = Tdomain%sFace(nf)%Ivy(k,ngll2-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,4)
@@ -89,18 +91,23 @@ subroutine Comm_Mass_Face (Tdomain,n,ngll,ngllPML)
         nf = Tdomain%sComm(n)%faces(i)
         do j = 1,Tdomain%sFace(nf)%ngll2-2
            do k = 1,Tdomain%sFace(nf)%ngll1-2
-              Tdomain%sFace(nf)%MassMat(ngll1-1-k,ngll2-1-j) = Tdomain%sFace(nf)%MassMat(ngll1-1-k,ngll2-1-j) + Tdomain%sComm(n)%Take(ngll)
+              Tdomain%sFace(nf)%MassMat(ngll1-1-k,ngll2-1-j) = &
+              Tdomain%sFace(nf)%MassMat(ngll1-1-k,ngll2-1-j) + Tdomain%sComm(n)%Take(ngll)
               ngll = ngll + 1
            enddo
         enddo
         if (Tdomain%sFace(nf)%PML) then
            do j = 1,Tdomain%sFace(nf)%ngll2-2
               do k = 1,Tdomain%sFace(nf)%ngll1-2
-                 Tdomain%sFace(nf)%DumpMass(ngll1-1-k,ngll2-1-j,0:2) = Tdomain%sFace(nf)%DumpMass(ngll1-1-k,ngll2-1-j,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
+                 Tdomain%sFace(nf)%DumpMass(ngll1-1-k,ngll2-1-j,0:2) = &
+                 Tdomain%sFace(nf)%DumpMass(ngll1-1-k,ngll2-1-j,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
                  if (Tdomain%any_FPML) then
-                    Tdomain%sFace(nf)%Ivx(ngll1-1-k,ngll2-1-j) = Tdomain%sFace(nf)%Ivx(ngll1-1-k,ngll2-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,3)
-                    Tdomain%sFace(nf)%Ivy(ngll1-1-k,ngll2-1-j) = Tdomain%sFace(nf)%Ivy(ngll1-1-k,ngll2-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,4)
-                    Tdomain%sFace(nf)%Ivz(ngll1-1-k,ngll2-1-j) = Tdomain%sFace(nf)%Ivz(ngll1-1-k,ngll2-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,5)
+                    Tdomain%sFace(nf)%Ivx(ngll1-1-k,ngll2-1-j) = &
+                    Tdomain%sFace(nf)%Ivx(ngll1-1-k,ngll2-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,3)
+                    Tdomain%sFace(nf)%Ivy(ngll1-1-k,ngll2-1-j) = &
+                    Tdomain%sFace(nf)%Ivy(ngll1-1-k,ngll2-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,4)
+                    Tdomain%sFace(nf)%Ivz(ngll1-1-k,ngll2-1-j) = &
+                    Tdomain%sFace(nf)%Ivz(ngll1-1-k,ngll2-1-j) + Tdomain%sComm(n)%TakePML(ngllPML,5)
                  endif
                  ngllPML = ngllPML + 1
               enddo
@@ -140,7 +147,8 @@ subroutine Comm_Mass_Face (Tdomain,n,ngll,ngllPML)
         if (Tdomain%sFace(nf)%PML) then
            do j = 1,Tdomain%sFace(nf)%ngll2-2
               do k = 1,Tdomain%sFace(nf)%ngll1-2
-                 Tdomain%sFace(nf)%DumpMass(ngll2-1-j,k,0:2) = Tdomain%sFace(nf)%DumpMass(ngll2-1-j,k,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
+                 Tdomain%sFace(nf)%DumpMass(ngll2-1-j,k,0:2) = &
+                 Tdomain%sFace(nf)%DumpMass(ngll2-1-j,k,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
                  if (Tdomain%any_FPML) then
                     Tdomain%sFace(nf)%Ivx(ngll1-1-j,k) = Tdomain%sFace(nf)%Ivx(ngll1-1-j,k) + Tdomain%sComm(n)%TakePML(ngllPML,3)
                     Tdomain%sFace(nf)%Ivy(ngll1-1-j,k) = Tdomain%sFace(nf)%Ivy(ngll1-1-j,k) + Tdomain%sComm(n)%TakePML(ngllPML,4)
@@ -162,7 +170,8 @@ subroutine Comm_Mass_Face (Tdomain,n,ngll,ngllPML)
         if (Tdomain%sFace(nf)%PML) then
            do j = 1,Tdomain%sFace(nf)%ngll2-2
               do k = 1,Tdomain%sFace(nf)%ngll1-2
-                 Tdomain%sFace(nf)%DumpMass(j,ngll1-1-k,0:2) = Tdomain%sFace(nf)%DumpMass(j,ngll1-1-k,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
+                 Tdomain%sFace(nf)%DumpMass(j,ngll1-1-k,0:2) = &
+                 Tdomain%sFace(nf)%DumpMass(j,ngll1-1-k,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
                  if (Tdomain%any_FPML) then
                     Tdomain%sFace(nf)%Ivx(j,ngll2-1-k) = Tdomain%sFace(nf)%Ivx(j,ngll2-1-k) + Tdomain%sComm(n)%TakePML(ngllPML,3)
                     Tdomain%sFace(nf)%Ivy(j,ngll2-1-k) = Tdomain%sFace(nf)%Ivy(j,ngll2-1-k) + Tdomain%sComm(n)%TakePML(ngllPML,4)
@@ -177,18 +186,23 @@ subroutine Comm_Mass_Face (Tdomain,n,ngll,ngllPML)
         nf = Tdomain%sComm(n)%faces(i)
         do j = 1,Tdomain%sFace(nf)%ngll2-2
            do k = 1,Tdomain%sFace(nf)%ngll1-2
-              Tdomain%sFace(nf)%MassMat(ngll2-1-j,ngll1-1-k) = Tdomain%sFace(nf)%MassMat(ngll2-1-j,ngll1-1-k) + Tdomain%sComm(n)%Take(ngll)
+              Tdomain%sFace(nf)%MassMat(ngll2-1-j,ngll1-1-k) = &
+              Tdomain%sFace(nf)%MassMat(ngll2-1-j,ngll1-1-k) + Tdomain%sComm(n)%Take(ngll)
               ngll = ngll + 1
            enddo
         enddo
         if (Tdomain%sFace(nf)%PML) then
            do j = 1,Tdomain%sFace(nf)%ngll2-2
               do k = 1,Tdomain%sFace(nf)%ngll1-2
-                 Tdomain%sFace(nf)%DumpMass(ngll2-1-j,ngll1-1-k,0:2) = Tdomain%sFace(nf)%DumpMass(ngll2-1-j,ngll1-1-k,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
+                 Tdomain%sFace(nf)%DumpMass(ngll2-1-j,ngll1-1-k,0:2) = &
+                 Tdomain%sFace(nf)%DumpMass(ngll2-1-j,ngll1-1-k,0:2) + Tdomain%sComm(n)%TakePML(ngllPML,0:2)
                  if (Tdomain%any_FPML) then
-                    Tdomain%sFace(nf)%Ivx(ngll1-1-j,ngll2-1-k) = Tdomain%sFace(nf)%Ivx(ngll1-1-j,ngll2-1-k) + Tdomain%sComm(n)%TakePML(ngllPML,3)
-                    Tdomain%sFace(nf)%Ivy(ngll1-1-j,ngll2-1-k) = Tdomain%sFace(nf)%Ivy(ngll1-1-j,ngll2-1-k) + Tdomain%sComm(n)%TakePML(ngllPML,4)
-                    Tdomain%sFace(nf)%Ivz(ngll1-1-j,ngll2-1-k) = Tdomain%sFace(nf)%Ivz(ngll1-1-j,ngll2-1-k) + Tdomain%sComm(n)%TakePML(ngllPML,5)
+                    Tdomain%sFace(nf)%Ivx(ngll1-1-j,ngll2-1-k) = &
+                    Tdomain%sFace(nf)%Ivx(ngll1-1-j,ngll2-1-k) + Tdomain%sComm(n)%TakePML(ngllPML,3)
+                    Tdomain%sFace(nf)%Ivy(ngll1-1-j,ngll2-1-k) = &
+                    Tdomain%sFace(nf)%Ivy(ngll1-1-j,ngll2-1-k) + Tdomain%sComm(n)%TakePML(ngllPML,4)
+                    Tdomain%sFace(nf)%Ivz(ngll1-1-j,ngll2-1-k) = &
+                    Tdomain%sFace(nf)%Ivz(ngll1-1-j,ngll2-1-k) + Tdomain%sComm(n)%TakePML(ngllPML,5)
                  endif
                  ngllPML = ngllPML + 1
               enddo

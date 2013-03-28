@@ -43,7 +43,8 @@ do i = 0,Tdomain%sComm(n)%nb_faces-1
   else if ( Tdomain%sComm(n)%orient_faces(i) == 1 ) then
     do j = 1,Tdomain%sFace(nf)%ngll2-2
       do k = 1,Tdomain%sFace(nf)%ngll1-2
-          Tdomain%sFace(nf)%Forces(ngll1-1-k,j,0:2) = Tdomain%sFace(nf)%Forces(ngll1-1-k,j,0:2) + Tdomain%sComm(n)%TakeForces(ngll,0:2)
+          Tdomain%sFace(nf)%Forces(ngll1-1-k,j,0:2) = Tdomain%sFace(nf)%Forces(ngll1-1-k,j,0:2) &
+          + Tdomain%sComm(n)%TakeForces(ngll,0:2)
           ngll = ngll + 1
       enddo
     enddo
@@ -64,7 +65,8 @@ do i = 0,Tdomain%sComm(n)%nb_faces-1
   else if ( Tdomain%sComm(n)%orient_faces(i) == 2 ) then
     do j = 1,Tdomain%sFace(nf)%ngll2-2
       do k = 1,Tdomain%sFace(nf)%ngll1-2
-          Tdomain%sFace(nf)%Forces(k,ngll2-1-j,0:2) = Tdomain%sFace(nf)%Forces(k,ngll2-1-j,0:2) + Tdomain%sComm(n)%TakeForces(ngll,0:2)
+          Tdomain%sFace(nf)%Forces(k,ngll2-1-j,0:2) = Tdomain%sFace(nf)%Forces(k,ngll2-1-j,0:2) &
+          + Tdomain%sComm(n)%TakeForces(ngll,0:2)
           ngll = ngll + 1
       enddo
     enddo
@@ -85,18 +87,22 @@ do i = 0,Tdomain%sComm(n)%nb_faces-1
   else if ( Tdomain%sComm(n)%orient_faces(i) == 3 ) then
     do j = 1,Tdomain%sFace(nf)%ngll2-2
       do k = 1,Tdomain%sFace(nf)%ngll1-2
-          Tdomain%sFace(nf)%Forces(ngll1-1-k,ngll2-1-j,0:2) = Tdomain%sFace(nf)%Forces(ngll1-1-k,ngll2-1-j,0:2) + Tdomain%sComm(n)%TakeForces(ngll,0:2)
+          Tdomain%sFace(nf)%Forces(ngll1-1-k,ngll2-1-j,0:2) = &
+          Tdomain%sFace(nf)%Forces(ngll1-1-k,ngll2-1-j,0:2) + Tdomain%sComm(n)%TakeForces(ngll,0:2)
           ngll = ngll + 1
       enddo
     enddo
     if (Tdomain%sFace(nf)%PML) then
       do j = 1,Tdomain%sFace(nf)%ngll2-2
           do k = 1,Tdomain%sFace(nf)%ngll1-2
-              Tdomain%sFace(nf)%Forces1(ngll1-1-k,ngll2-1-j,0:2) = Tdomain%sFace(nf)%Forces1(ngll1-1-k,ngll2-1-j,0:2) + &
+              Tdomain%sFace(nf)%Forces1(ngll1-1-k,ngll2-1-j,0:2) = &
+              Tdomain%sFace(nf)%Forces1(ngll1-1-k,ngll2-1-j,0:2) + &
                                                    Tdomain%sComm(n)%TakeForcesPML(ngllPML,1,0:2)
-              Tdomain%sFace(nf)%Forces2(ngll1-1-k,ngll2-1-j,0:2) = Tdomain%sFace(nf)%Forces2(ngll1-1-k,ngll2-1-j,0:2) + &
+              Tdomain%sFace(nf)%Forces2(ngll1-1-k,ngll2-1-j,0:2) = &
+              Tdomain%sFace(nf)%Forces2(ngll1-1-k,ngll2-1-j,0:2) + &
                                                    Tdomain%sComm(n)%TakeForcesPML(ngllPML,2,0:2)
-              Tdomain%sFace(nf)%Forces3(ngll1-1-k,ngll2-1-j,0:2) = Tdomain%sFace(nf)%Forces3(ngll1-1-k,ngll2-1-j,0:2) + &
+              Tdomain%sFace(nf)%Forces3(ngll1-1-k,ngll2-1-j,0:2) = &
+              Tdomain%sFace(nf)%Forces3(ngll1-1-k,ngll2-1-j,0:2) + &
                                                    Tdomain%sComm(n)%TakeForcesPML(ngllPML,3,0:2)
               ngllPML = ngllPML + 1
           enddo
@@ -127,7 +133,8 @@ do i = 0,Tdomain%sComm(n)%nb_faces-1
   else if ( Tdomain%sComm(n)%orient_faces(i) == 5 ) then
     do j = 1,Tdomain%sFace(nf)%ngll2-2
       do k = 1,Tdomain%sFace(nf)%ngll1-2
-          Tdomain%sFace(nf)%Forces(ngll2-1-j,k,0:2) = Tdomain%sFace(nf)%Forces(ngll2-1-j,k,0:2) + Tdomain%sComm(n)%TakeForces(ngll,0:2)
+          Tdomain%sFace(nf)%Forces(ngll2-1-j,k,0:2) = Tdomain%sFace(nf)%Forces(ngll2-1-j,k,0:2) + &
+          Tdomain%sComm(n)%TakeForces(ngll,0:2)
           ngll = ngll + 1
       enddo
     enddo
@@ -148,7 +155,8 @@ do i = 0,Tdomain%sComm(n)%nb_faces-1
   else if ( Tdomain%sComm(n)%orient_faces(i) == 6 ) then
     do j = 1,Tdomain%sFace(nf)%ngll2-2
       do k = 1,Tdomain%sFace(nf)%ngll1-2
-          Tdomain%sFace(nf)%Forces(j,ngll1-1-k,0:2) = Tdomain%sFace(nf)%Forces(j,ngll1-1-k,0:2) + Tdomain%sComm(n)%TakeForces(ngll,0:2)
+          Tdomain%sFace(nf)%Forces(j,ngll1-1-k,0:2) = Tdomain%sFace(nf)%Forces(j,ngll1-1-k,0:2) + &
+          Tdomain%sComm(n)%TakeForces(ngll,0:2)
           ngll = ngll + 1
       enddo
     enddo
@@ -169,7 +177,8 @@ do i = 0,Tdomain%sComm(n)%nb_faces-1
   else if ( Tdomain%sComm(n)%orient_faces(i) == 7 ) then
     do j = 1,Tdomain%sFace(nf)%ngll2-2
       do k = 1,Tdomain%sFace(nf)%ngll1-2
-          Tdomain%sFace(nf)%Forces(ngll2-1-j,ngll1-1-k,0:2) = Tdomain%sFace(nf)%Forces(ngll2-1-j,ngll1-1-k,0:2) + Tdomain%sComm(n)%TakeForces(ngll,0:2)
+          Tdomain%sFace(nf)%Forces(ngll2-1-j,ngll1-1-k,0:2) = &
+          Tdomain%sFace(nf)%Forces(ngll2-1-j,ngll1-1-k,0:2) + Tdomain%sComm(n)%TakeForces(ngll,0:2)
           ngll = ngll + 1
       enddo
     enddo

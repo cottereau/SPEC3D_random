@@ -520,7 +520,8 @@ subroutine Newmark (Tdomain,rg,ntime)
               nf_aus = Tdomain%sPlaneW%pFace(nf)%Face_UP
               call get_vel_face(Tdomain%sFace(nf_aus),VF_free,ngll1,ngll2,Tdomain%sSubdomain(mat)%dt,.false.,0,nf)
               nf_aus = Tdomain%sPlaneW%pFace(nf)%Face_DOWN
-              call get_vel_face(Tdomain%sFace(nf_aus),VF_free,ngll1,ngll2,Tdomain%sSubdomain(mat)%dt,.true.,Tdomain%sPlaneW%pFace(nf)%Orient,nf)
+              call get_vel_face(Tdomain%sFace(nf_aus),VF_free,ngll1,ngll2,&
+              Tdomain%sSubdomain(mat)%dt,.true.,Tdomain%sPlaneW%pFace(nf)%Orient,nf)
               call compute_pforces_on_face (Tdomain%sPlaneW%pFace(nf),Tdomain%sPlaneW%pParam,VF_free, & 
                    Tdomain%sSubdomain(mat)%dt,Tdomain%TimeD%rtime,nf,rg)
               deallocate (VF_free)
@@ -534,7 +535,8 @@ subroutine Newmark (Tdomain,rg,ntime)
               ne_aus = Tdomain%sPlaneW%pEdge(ne)%Edge_UP
               call get_vel_edge(Tdomain%sEdge(ne_aus),VE_free,ngll,Tdomain%sSubdomain(mat)%dt,.false.,0)
               ne_aus = Tdomain%sPlaneW%pEdge(ne)%Edge_DOWN
-              call get_vel_edge(Tdomain%sEdge(ne_aus),VE_free,ngll,Tdomain%sSubdomain(mat)%dt,.true.,Tdomain%sPlaneW%pEdge(ne)%Orient)
+              call get_vel_edge(Tdomain%sEdge(ne_aus),VE_free,ngll,&
+              Tdomain%sSubdomain(mat)%dt,.true.,Tdomain%sPlaneW%pEdge(ne)%Orient)
               call compute_pforces_on_edge (Tdomain%sPlaneW%pEdge(ne),Tdomain%sPlaneW%pParam,VE_free, & 
                    Tdomain%sSubdomain(mat)%dt,Tdomain%TimeD%rtime,ne,rg)
               deallocate (VE_free)
@@ -584,7 +586,8 @@ subroutine Newmark (Tdomain,rg,ntime)
               nv_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_UP
               Tdomain%sVertex(nv_aus)%Forces(0:2) = Tdomain%sVertex(nv_aus)%Forces(0:2) - Tdomain%sPlaneW%pVertex(nv)%Forces_Up(0:2)
               nv_aus = Tdomain%sPlaneW%pVertex(nv)%Vertex_DOWN
-              Tdomain%sVertex(nv_aus)%Forces(0:2) = Tdomain%sVertex(nv_aus)%Forces(0:2) + Tdomain%sPlaneW%pVertex(nv)%Forces_Down(0:2)
+              Tdomain%sVertex(nv_aus)%Forces(0:2) = Tdomain%sVertex(nv_aus)%Forces(0:2) &
+              + Tdomain%sPlaneW%pVertex(nv)%Forces_Down(0:2)
            enddo
 
         endif

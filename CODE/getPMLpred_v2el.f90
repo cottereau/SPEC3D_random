@@ -35,7 +35,8 @@ nv = Tdomain%specel(n)%near_vertices(5)
 Tdomain%specel(n)%Forces(ngllx-1,0,ngllz-1,:) = Tdomain%sVertex(nv)%Veloc(:) + dt * (0.5 - bega) *  Tdomain%sVertex(nv)%Accel(:)
 
 nv = Tdomain%specel(n)%near_vertices(6)
-Tdomain%specel(n)%Forces(ngllx-1,nglly-1,ngllz-1,:) = Tdomain%sVertex(nv)%Veloc(:) + dt * (0.5 - bega) *  Tdomain%sVertex(nv)%Accel(:)
+Tdomain%specel(n)%Forces(ngllx-1,nglly-1,ngllz-1,:) = Tdomain%sVertex(nv)%Veloc(:) &
++ dt * (0.5 - bega) *  Tdomain%sVertex(nv)%Accel(:)
 
 nv = Tdomain%specel(n)%near_vertices(7)
 Tdomain%specel(n)%Forces(0,nglly-1,ngllz-1,:) = Tdomain%sVertex(nv)%Veloc(:) + dt * (0.5 - bega) *  Tdomain%sVertex(nv)%Accel(:)
