@@ -22,3 +22,7 @@ contact : Regis Cottereau (regis.cottereau@ecp.fr)
 
 Another version of the code, very similar in most core aspects can be found at
 http://www.ipgp.fr/~paulcup/RegSEM.html 
+
+COMPILATION
+============
+For compilation of the software under MacOSX, one should install openmpi from http://www.open-mpi.org/ or from Fink
