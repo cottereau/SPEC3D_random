@@ -500,7 +500,7 @@ subroutine randomisation(CorNx,CorNy,CorNz,CorLx,CorLy,CorLz,ChosenSeed,&
 
 
   real,dimension(0:2,0:s_NbGlob(s_rg)-1), intent(IN) ::s_GlobCoord
-  real,dimension(0:s_ngllx-1,0:s_nglly-1,0:s_ngllz-1),intent(INOUT)::s_RandParam
+  double precision,dimension(0:s_ngllx-1,0:s_nglly-1,0:s_ngllz-1),intent(INOUT)::s_RandParam
 !!$  real,dimension(0:s_ngllx-1,0:s_nglly-1,0:s_ngllz-1,0:1)::RandParamUnif
   real,dimension(:,:,:,:),allocatable::RandParamUnif
   real,dimension(0:CorNx*CorNy*CorNz-1)::tripl0,tripl1,tripl2,dot_prod,S

@@ -277,7 +277,7 @@ subroutine pol_lagrange (opt,p,GLL_grid,GLL_pos,val_in,val_out)
   character(1)::opt
   integer, intent (IN) :: p,GLL_pos
   real, dimension  (0:p-1), intent (IN)::GLL_grid
-  real,intent (IN)::val_in
+  double precision, intent (IN)::val_in
   real, intent (OUT)::val_out
 
   !Local variable  

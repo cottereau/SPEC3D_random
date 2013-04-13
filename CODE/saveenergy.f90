@@ -305,9 +305,9 @@ real, dimension(6,6) :: s_C
                          +2*Tdomain%specel(n)%Acoeff(i,j,k,37)* dUy_dzeta(i,j,k) * dUz_deta(i,j,k)
 
                     !PotResi_GLL=PotGLL-PotP_GLL-PotS_GLL  
-if (PotP_GLL<1e-200 .and. PotS_GLL<1e-200) then
-PotP_GLL = 1e-200
-PotS_GLL = 1e-200
+if (PotP_GLL<1e-30 .and. PotS_GLL<1e-30) then
+PotP_GLL = 1e-30
+PotS_GLL = 1e-30
 endif
 
                     PotResi_GLL=PotP_GLL/PotS_GLL 
